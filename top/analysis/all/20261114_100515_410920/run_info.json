@@ -1,0 +1,18 @@
+{
+  "status": "complete",
+  "video_id": "20261114_095054_184431",
+  "view_info": "top",
+  "frame_count": 150,
+  "observations": 900,
+  "frame_steps": [
+    1,
+    5
+  ],
+  "time_source": "filename _t seconds, relative to first frame",
+  "segmentation_dir": "E:\\Phd\\temperature\\sam3\\top\\outputs\\20261114_095054_184431",
+  "head_hints": {},
+  "use_filename_timestamps": null,
+  "signed_distance_definition": "Euclidean distance; sign from mean endpoint head direction; lateral is positive",
+  "warnings": [],
+  "indicator_records": 7998
+}

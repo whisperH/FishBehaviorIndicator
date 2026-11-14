@@ -1,0 +1,32 @@
+{
+  "status": "complete",
+  "image_directory": "E:\\Phd\\temperature\\sam3\\000000",
+  "checkpoint": "E:\\Phd\\temperature\\sam3\\top\\models\\sam3.pt",
+  "checkpoint_sha256": "9999e2341ceef5e136daa386eecb55cb414446a00ac2b55eb2dfd2f7c3cf8c9e",
+  "prompt": "fish",
+  "fps": 30.0,
+  "image_size": 1008,
+  "score_threshold": 0.25,
+  "seed": 0,
+  "frames": 150,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "gpu": "NVIDIA GeForce RTX 4060",
+  "torch": "2.9.1+cu126",
+  "autocast_dtype": "bfloat16",
+  "sessions": 1,
+  "prompts": 1,
+  "mask_png_value": "original SAM3 ID + 1; background=0",
+  "timing": "frame_index / FPS; synthetic playback time",
+  "view_info": "top",
+  "category_id": 1,
+  "video_id": "20261114_095054_184431",
+  "standard_data_file": "standard_data.jsonl.gz",
+  "standard_time_source": "filename _t seconds, relative to first frame",
+  "standard_rle": "COCO column-major uncompressed integer runs, background first",
+  "completed_frames": 150,
+  "seconds": 303.25,
+  "peak_gpu_memory_gib": 7.166820049285889
+}
