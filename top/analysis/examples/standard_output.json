@@ -1,0 +1,5434 @@
+{
+  "data": [
+    {
+      "track_id": 0,
+      "frame_id": 0,
+      "behavior_indicator": "position_x",
+      "behavior_value": 723.260639606396,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 0,
+      "behavior_indicator": "position_y",
+      "behavior_value": 471.3247232472325,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 0,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": 0.4682064269860826,
+      "unit": "degree",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 0,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": -16.9363891195468,
+      "unit": "degree",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 0,
+      "behavior_indicator": "position_x",
+      "behavior_value": 413.988864142539,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 0,
+      "behavior_indicator": "position_y",
+      "behavior_value": 639.2299227040482,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 0,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": -1.2133236771349438,
+      "unit": "degree",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 0,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": 4.220004546155593,
+      "unit": "degree",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 0,
+      "behavior_indicator": "position_x",
+      "behavior_value": 1353.5979552715655,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 0,
+      "behavior_indicator": "position_y",
+      "behavior_value": 481.4723322683706,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 0,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": -4.439285601517123,
+      "unit": "degree",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 0,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": -13.898438459278887,
+      "unit": "degree",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 0,
+      "behavior_indicator": "position_x",
+      "behavior_value": 516.0760968229955,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 0,
+      "behavior_indicator": "position_y",
+      "behavior_value": 294.6678517397882,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 0,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": -4.698539136473193,
+      "unit": "degree",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 0,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": -17.96208712404158,
+      "unit": "degree",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 0,
+      "behavior_indicator": "position_x",
+      "behavior_value": 1229.8141923436042,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 0,
+      "behavior_indicator": "position_y",
+      "behavior_value": 559.8880885687608,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 0,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": 2.836930723260621,
+      "unit": "degree",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 0,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": 7.381604954149084,
+      "unit": "degree",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 0,
+      "behavior_indicator": "position_x",
+      "behavior_value": 816.4189339536765,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 0,
+      "behavior_indicator": "position_y",
+      "behavior_value": 352.4310711034692,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 0,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": 6.371079299627974,
+      "unit": "degree",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 0,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": 19.6819211355257,
+      "unit": "degree",
+      "frame_range": [
+        0
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 1,
+      "behavior_indicator": "position_x",
+      "behavior_value": 720.4597343544334,
+      "unit": "pixel",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 1,
+      "behavior_indicator": "position_y",
+      "behavior_value": 468.49611104463327,
+      "unit": "pixel",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 1,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": -2.5859407946683652,
+      "unit": "degree",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 1,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": -11.133907534269229,
+      "unit": "degree",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 1,
+      "behavior_indicator": "position_x",
+      "behavior_value": 423.42931809894253,
+      "unit": "pixel",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 1,
+      "behavior_indicator": "position_y",
+      "behavior_value": 639.3291600826547,
+      "unit": "pixel",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 1,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": 7.4946968395235904,
+      "unit": "degree",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 1,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": 20.94953328373669,
+      "unit": "degree",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 1,
+      "behavior_indicator": "position_x",
+      "behavior_value": 1356.5853905557665,
+      "unit": "pixel",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 1,
+      "behavior_indicator": "position_y",
+      "behavior_value": 480.7557918723889,
+      "unit": "pixel",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 1,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": -3.8541743277349965,
+      "unit": "degree",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 1,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": -1.6863311685083595,
+      "unit": "degree",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 1,
+      "behavior_indicator": "position_x",
+      "behavior_value": 526.2590947546531,
+      "unit": "pixel",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 1,
+      "behavior_indicator": "position_y",
+      "behavior_value": 294.9248448956571,
+      "unit": "pixel",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 1,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": -4.134876035884034,
+      "unit": "degree",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 1,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": -19.817661767622305,
+      "unit": "degree",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 1,
+      "behavior_indicator": "position_x",
+      "behavior_value": 1231.6584296532483,
+      "unit": "pixel",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 1,
+      "behavior_indicator": "position_y",
+      "behavior_value": 559.8165271688588,
+      "unit": "pixel",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 1,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": -1.6620385823806059,
+      "unit": "degree",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 1,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": -8.872353442549901,
+      "unit": "degree",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 1,
+      "behavior_indicator": "position_x",
+      "behavior_value": 825.4665539270951,
+      "unit": "pixel",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 1,
+      "behavior_indicator": "position_y",
+      "behavior_value": 352.0284667418264,
+      "unit": "pixel",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 1,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": 5.297814569280146,
+      "unit": "degree",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 1,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": 14.385995838133802,
+      "unit": "degree",
+      "frame_range": [
+        1
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 2,
+      "behavior_indicator": "position_x",
+      "behavior_value": 712.876507124589,
+      "unit": "pixel",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 2,
+      "behavior_indicator": "position_y",
+      "behavior_value": 467.17391304347825,
+      "unit": "pixel",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 2,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": 4.077091084996327,
+      "unit": "degree",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 2,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": 13.99696169500181,
+      "unit": "degree",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 2,
+      "behavior_indicator": "position_x",
+      "behavior_value": 404.9801502145923,
+      "unit": "pixel",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 2,
+      "behavior_indicator": "position_y",
+      "behavior_value": 639.9817596566523,
+      "unit": "pixel",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 2,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": 6.270487669865425,
+      "unit": "degree",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 2,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": 0.7135310730771993,
+      "unit": "degree",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 2,
+      "behavior_indicator": "position_x",
+      "behavior_value": 1363.6123637264618,
+      "unit": "pixel",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 2,
+      "behavior_indicator": "position_y",
+      "behavior_value": 481.17827056491575,
+      "unit": "pixel",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 2,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": -0.8643789341448896,
+      "unit": "degree",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 2,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": 9.245600069003226,
+      "unit": "degree",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 2,
+      "behavior_indicator": "position_x",
+      "behavior_value": 519.7996426178245,
+      "unit": "pixel",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 2,
+      "behavior_indicator": "position_y",
+      "behavior_value": 295.2082495718859,
+      "unit": "pixel",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 2,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": 0.0036927530760464448,
+      "unit": "degree",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 2,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": 2.5291284786625923,
+      "unit": "degree",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 2,
+      "behavior_indicator": "position_x",
+      "behavior_value": 1233.1344981714751,
+      "unit": "pixel",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 2,
+      "behavior_indicator": "position_y",
+      "behavior_value": 558.4865230935934,
+      "unit": "pixel",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 2,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": -6.10591682677871,
+      "unit": "degree",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 2,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": -16.046486149741103,
+      "unit": "degree",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 2,
+      "behavior_indicator": "position_x",
+      "behavior_value": 827.1937084542645,
+      "unit": "pixel",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 2,
+      "behavior_indicator": "position_y",
+      "behavior_value": 352.503230034641,
+      "unit": "pixel",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 2,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": 1.9961205883517743,
+      "unit": "degree",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 2,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": -3.5000849166757617,
+      "unit": "degree",
+      "frame_range": [
+        2
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 3,
+      "behavior_indicator": "position_x",
+      "behavior_value": 720.3157665505227,
+      "unit": "pixel",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 3,
+      "behavior_indicator": "position_y",
+      "behavior_value": 465.4445775261324,
+      "unit": "pixel",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 3,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": 7.266120686870055,
+      "unit": "degree",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 3,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": 26.7903041021131,
+      "unit": "degree",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 3,
+      "behavior_indicator": "position_x",
+      "behavior_value": 404.9728489957848,
+      "unit": "pixel",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 3,
+      "behavior_indicator": "position_y",
+      "behavior_value": 638.1549714852467,
+      "unit": "pixel",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 3,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": 0.4073155164461731,
+      "unit": "degree",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 3,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": -7.398701409528691,
+      "unit": "degree",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 3,
+      "behavior_indicator": "position_x",
+      "behavior_value": 1374.939140811456,
+      "unit": "pixel",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 3,
+      "behavior_indicator": "position_y",
+      "behavior_value": 480.96957040572795,
+      "unit": "pixel",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 3,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": 1.0324351770703593,
+      "unit": "degree",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 3,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": 17.8060495513655,
+      "unit": "degree",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 3,
+      "behavior_indicator": "position_x",
+      "behavior_value": 522.2580737763743,
+      "unit": "pixel",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 3,
+      "behavior_indicator": "position_y",
+      "behavior_value": 296.2881441079374,
+      "unit": "pixel",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 3,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": 3.5506867300187013,
+      "unit": "degree",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 3,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": 17.286291365830873,
+      "unit": "degree",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 3,
+      "behavior_indicator": "position_x",
+      "behavior_value": 1233.6813649768292,
+      "unit": "pixel",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 3,
+      "behavior_indicator": "position_y",
+      "behavior_value": 557.9794972616205,
+      "unit": "pixel",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 3,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": -5.749670647410324,
+      "unit": "degree",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 3,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": -3.878579429493482,
+      "unit": "degree",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 3,
+      "behavior_indicator": "position_x",
+      "behavior_value": 831.7417275054518,
+      "unit": "pixel",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 3,
+      "behavior_indicator": "position_y",
+      "behavior_value": 351.84071299895703,
+      "unit": "pixel",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 3,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": -1.5914371577235977,
+      "unit": "degree",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 3,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": -14.592787133196934,
+      "unit": "degree",
+      "frame_range": [
+        3
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 4,
+      "behavior_indicator": "position_x",
+      "behavior_value": 699.2503685225082,
+      "unit": "pixel",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 4,
+      "behavior_indicator": "position_y",
+      "behavior_value": 465.6983785009638,
+      "unit": "pixel",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 4,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": 4.754623765311059,
+      "unit": "degree",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 4,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": -0.7281668069244401,
+      "unit": "degree",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 4,
+      "behavior_indicator": "position_x",
+      "behavior_value": 400.7934957338939,
+      "unit": "pixel",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 4,
+      "behavior_indicator": "position_y",
+      "behavior_value": 636.6880178063559,
+      "unit": "pixel",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 4,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": 1.9701022395701278,
+      "unit": "degree",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 4,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": 3.654037562570975,
+      "unit": "degree",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 4,
+      "behavior_indicator": "position_x",
+      "behavior_value": 1364.464801927195,
+      "unit": "pixel",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 4,
+      "behavior_indicator": "position_y",
+      "behavior_value": 482.80353319057815,
+      "unit": "pixel",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 4,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": -0.6463012691640705,
+      "unit": "degree",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 4,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": -1.459978403796649,
+      "unit": "degree",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 4,
+      "behavior_indicator": "position_x",
+      "behavior_value": 538.6705468327017,
+      "unit": "pixel",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 4,
+      "behavior_indicator": "position_y",
+      "behavior_value": 297.650311315647,
+      "unit": "pixel",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 4,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": 1.2883672257611876,
+      "unit": "degree",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 4,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": 10.619824380150316,
+      "unit": "degree",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 4,
+      "behavior_indicator": "position_x",
+      "behavior_value": 1240.887715930902,
+      "unit": "pixel",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 4,
+      "behavior_indicator": "position_y",
+      "behavior_value": 558.4281601316151,
+      "unit": "pixel",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 4,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": -2.147052465133959,
+      "unit": "degree",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 4,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": 7.950373759871809,
+      "unit": "degree",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 4,
+      "behavior_indicator": "position_x",
+      "behavior_value": 836.7832512315271,
+      "unit": "pixel",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 4,
+      "behavior_indicator": "position_y",
+      "behavior_value": 350.5531183195464,
+      "unit": "pixel",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 4,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": -2.1262900221914807,
+      "unit": "degree",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 4,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": -12.21185151902266,
+      "unit": "degree",
+      "frame_range": [
+        4
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 5,
+      "behavior_indicator": "position_x",
+      "behavior_value": 691.4999443640814,
+      "unit": "pixel",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 5,
+      "behavior_indicator": "position_y",
+      "behavior_value": 462.78557916991207,
+      "unit": "pixel",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 5,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": 0.6141353473474831,
+      "unit": "degree",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 5,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": -12.584686074159876,
+      "unit": "degree",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 5,
+      "behavior_indicator": "position_x",
+      "behavior_value": 398.30835275358766,
+      "unit": "pixel",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 5,
+      "behavior_indicator": "position_y",
+      "behavior_value": 635.8874034097878,
+      "unit": "pixel",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 5,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": 6.762370284972904,
+      "unit": "degree",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 1,
+      "frame_id": 5,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": 15.18544176523413,
+      "unit": "degree",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 5,
+      "behavior_indicator": "position_x",
+      "behavior_value": 1372.8544734562554,
+      "unit": "pixel",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 5,
+      "behavior_indicator": "position_y",
+      "behavior_value": 482.13265684939984,
+      "unit": "pixel",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 5,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": -4.945602482591311,
+      "unit": "degree",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 2,
+      "frame_id": 5,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": -12.88404350505497,
+      "unit": "degree",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 5,
+      "behavior_indicator": "position_x",
+      "behavior_value": 526.3889534883721,
+      "unit": "pixel",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 5,
+      "behavior_indicator": "position_y",
+      "behavior_value": 299.0811046511628,
+      "unit": "pixel",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 5,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": -4.350328673675519,
+      "unit": "degree",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 3,
+      "frame_id": 5,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": -16.66402045356118,
+      "unit": "degree",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 5,
+      "behavior_indicator": "position_x",
+      "behavior_value": 1250.2971917894472,
+      "unit": "pixel",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 5,
+      "behavior_indicator": "position_y",
+      "behavior_value": 559.0940687570835,
+      "unit": "pixel",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 5,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": 1.6805464772583303,
+      "unit": "degree",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 4,
+      "frame_id": 5,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": 16.439380420281843,
+      "unit": "degree",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 5,
+      "behavior_indicator": "position_x",
+      "behavior_value": 823.2368313597386,
+      "unit": "pixel",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 5,
+      "behavior_indicator": "position_y",
+      "behavior_value": 349.76102490812576,
+      "unit": "pixel",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 5,
+      "behavior_indicator": "heading_tilt",
+      "behavior_value": 1.1764728129339437,
+      "unit": "degree",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 5,
+      "frame_id": 5,
+      "behavior_indicator": "tail_angle",
+      "behavior_value": 6.907265506174694,
+      "unit": "degree",
+      "frame_range": [
+        5
+      ],
+      "status": "ok",
+      "reason": ""
+    },
+    {
+      "track_id": 0,
+      "frame_id": 0,
+      "behavior_indicator": "speed",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 0,
+      "behavior_indicator": "velocity",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 0,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 0,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 0,
+      "behavior_indicator": "speed",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 0,
+      "behavior_indicator": "velocity",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 0,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 0,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 0,
+      "behavior_indicator": "speed",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 0,
+      "behavior_indicator": "velocity",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 0,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 0,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 0,
+      "behavior_indicator": "speed",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 0,
+      "behavior_indicator": "velocity",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 0,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 0,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 0,
+      "behavior_indicator": "speed",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 0,
+      "behavior_indicator": "velocity",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 0,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 0,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 0,
+      "behavior_indicator": "speed",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 0,
+      "behavior_indicator": "velocity",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 0,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 0,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 1,
+      "behavior_indicator": "speed",
+      "behavior_value": 120.62785285886993,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 1,
+      "behavior_indicator": "velocity",
+      "behavior_value": 120.62785285886993,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 1,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 3.980718179319527,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 1,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 3.980718179319527,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 1,
+      "behavior_indicator": "speed",
+      "behavior_value": 286.0902369345694,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 1,
+      "behavior_indicator": "velocity",
+      "behavior_value": -286.0902369345694,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 1,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 9.440975530118047,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 1,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": -9.440975530118047,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 1,
+      "behavior_indicator": "speed",
+      "behavior_value": 93.09594117388326,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 1,
+      "behavior_indicator": "velocity",
+      "behavior_value": -93.09594117388326,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 1,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 3.072165313970342,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 1,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": -3.072165313970342,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 1,
+      "behavior_indicator": "speed",
+      "behavior_value": 308.6740246669784,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 1,
+      "behavior_indicator": "velocity",
+      "behavior_value": -308.6740246669784,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 1,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 10.186240344617175,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 1,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": -10.186240344617175,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 1,
+      "behavior_indicator": "speed",
+      "behavior_value": 55.92804917788852,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 1,
+      "behavior_indicator": "velocity",
+      "behavior_value": -55.92804917788852,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 1,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 1.845625175445762,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 1,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": -1.845625175445762,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 1,
+      "behavior_indicator": "speed",
+      "behavior_value": 274.44167752907356,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 1,
+      "behavior_indicator": "velocity",
+      "behavior_value": -274.44167752907356,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 1,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 9.056573162925194,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 1,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": -9.056573162925194,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 2,
+      "behavior_indicator": "speed",
+      "behavior_value": 233.26163383162665,
+      "unit": "pixel/s",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 2,
+      "behavior_indicator": "velocity",
+      "behavior_value": 233.26163383162665,
+      "unit": "pixel/s",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 2,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 7.6976322836124,
+      "unit": "pixel",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 2,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 7.6976322836124,
+      "unit": "pixel",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 2,
+      "behavior_indicator": "speed",
+      "behavior_value": 559.415464973571,
+      "unit": "pixel/s",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 2,
+      "behavior_indicator": "velocity",
+      "behavior_value": 559.415464973571,
+      "unit": "pixel/s",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 2,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 18.460706428219964,
+      "unit": "pixel",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 2,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 18.460706428219964,
+      "unit": "pixel",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 2,
+      "behavior_indicator": "speed",
+      "behavior_value": 213.32313425049642,
+      "unit": "pixel/s",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 2,
+      "behavior_indicator": "velocity",
+      "behavior_value": -213.32313425049642,
+      "unit": "pixel/s",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 2,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 7.039661937004586,
+      "unit": "pixel",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 2,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": -7.039661937004586,
+      "unit": "pixel",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 2,
+      "behavior_indicator": "speed",
+      "behavior_value": 195.9293220093142,
+      "unit": "pixel/s",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 2,
+      "behavior_indicator": "velocity",
+      "behavior_value": 195.9293220093142,
+      "unit": "pixel/s",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 2,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 6.4656662548022465,
+      "unit": "pixel",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 2,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 6.4656662548022465,
+      "unit": "pixel",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 2,
+      "behavior_indicator": "speed",
+      "behavior_value": 60.20847456206919,
+      "unit": "pixel/s",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 2,
+      "behavior_indicator": "velocity",
+      "behavior_value": -60.20847456206919,
+      "unit": "pixel/s",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 2,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 1.9868792390890018,
+      "unit": "pixel",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 2,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": -1.9868792390890018,
+      "unit": "pixel",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 2,
+      "behavior_indicator": "speed",
+      "behavior_value": 54.27935348694664,
+      "unit": "pixel/s",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 2,
+      "behavior_indicator": "velocity",
+      "behavior_value": -54.27935348694664,
+      "unit": "pixel/s",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 2,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 1.7912182851138012,
+      "unit": "pixel",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 2,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": -1.7912182851138012,
+      "unit": "pixel",
+      "frame_range": [
+        1,
+        2
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 3,
+      "behavior_indicator": "speed",
+      "behavior_value": 224.6347284676808,
+      "unit": "pixel/s",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 3,
+      "behavior_indicator": "velocity",
+      "behavior_value": -224.6347284676808,
+      "unit": "pixel/s",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 3,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 7.637616260188545,
+      "unit": "pixel",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 3,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": -7.637616260188545,
+      "unit": "pixel",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 3,
+      "behavior_indicator": "speed",
+      "behavior_value": 53.72924331489188,
+      "unit": "pixel/s",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 3,
+      "behavior_indicator": "velocity",
+      "behavior_value": 53.72924331489188,
+      "unit": "pixel/s",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 3,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 1.8268027619268394,
+      "unit": "pixel",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 3,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 1.8268027619268394,
+      "unit": "pixel",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 3,
+      "behavior_indicator": "speed",
+      "behavior_value": 333.1954990205479,
+      "unit": "pixel/s",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 3,
+      "behavior_indicator": "velocity",
+      "behavior_value": -333.1954990205479,
+      "unit": "pixel/s",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 3,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 11.328699611587918,
+      "unit": "pixel",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 3,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": -11.328699611587918,
+      "unit": "pixel",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 3,
+      "behavior_indicator": "speed",
+      "behavior_value": 78.97477237070106,
+      "unit": "pixel/s",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 3,
+      "behavior_indicator": "velocity",
+      "behavior_value": -78.97477237070106,
+      "unit": "pixel/s",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 3,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 2.685154738617976,
+      "unit": "pixel",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 3,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": -2.685154738617976,
+      "unit": "pixel",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 3,
+      "behavior_indicator": "speed",
+      "behavior_value": 21.933631574268514,
+      "unit": "pixel/s",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 3,
+      "behavior_indicator": "velocity",
+      "behavior_value": -21.933631574268514,
+      "unit": "pixel/s",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 3,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 0.7457469390389475,
+      "unit": "pixel",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 3,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": -0.7457469390389475,
+      "unit": "pixel",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 3,
+      "behavior_indicator": "speed",
+      "behavior_value": 135.1764507195459,
+      "unit": "pixel/s",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 3,
+      "behavior_indicator": "velocity",
+      "behavior_value": -135.1764507195459,
+      "unit": "pixel/s",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 3,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 4.596020682343955,
+      "unit": "pixel",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 3,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": -4.596020682343955,
+      "unit": "pixel",
+      "frame_range": [
+        2,
+        3
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 4,
+      "behavior_indicator": "speed",
+      "behavior_value": 638.3918790066384,
+      "unit": "pixel/s",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 4,
+      "behavior_indicator": "velocity",
+      "behavior_value": 638.3918790066384,
+      "unit": "pixel/s",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 4,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 21.06692690008441,
+      "unit": "pixel",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 4,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 21.06692690008441,
+      "unit": "pixel",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 4,
+      "behavior_indicator": "speed",
+      "behavior_value": 134.22209400713027,
+      "unit": "pixel/s",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 4,
+      "behavior_indicator": "velocity",
+      "behavior_value": 134.22209400713027,
+      "unit": "pixel/s",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 4,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 4.429328028458626,
+      "unit": "pixel",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 4,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 4.429328028458626,
+      "unit": "pixel",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 4,
+      "behavior_indicator": "speed",
+      "behavior_value": 322.23286839164916,
+      "unit": "pixel/s",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 4,
+      "behavior_indicator": "velocity",
+      "behavior_value": 322.23286839164916,
+      "unit": "pixel/s",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 4,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 10.633682079061664,
+      "unit": "pixel",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 4,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 10.633682079061664,
+      "unit": "pixel",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 4,
+      "behavior_indicator": "speed",
+      "behavior_value": 499.05779252918563,
+      "unit": "pixel/s",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 4,
+      "behavior_indicator": "velocity",
+      "behavior_value": -499.05779252918563,
+      "unit": "pixel/s",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 4,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 16.46890316100108,
+      "unit": "pixel",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 4,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": -16.46890316100108,
+      "unit": "pixel",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 4,
+      "behavior_indicator": "speed",
+      "behavior_value": 218.79714938952796,
+      "unit": "pixel/s",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 4,
+      "behavior_indicator": "velocity",
+      "behavior_value": -218.79714938952796,
+      "unit": "pixel/s",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 4,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 7.220304179477356,
+      "unit": "pixel",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 4,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": -7.220304179477356,
+      "unit": "pixel",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 4,
+      "behavior_indicator": "speed",
+      "behavior_value": 157.67734099253377,
+      "unit": "pixel/s",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 4,
+      "behavior_indicator": "velocity",
+      "behavior_value": -157.67734099253377,
+      "unit": "pixel/s",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 4,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 5.20335099133498,
+      "unit": "pixel",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 4,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": -5.20335099133498,
+      "unit": "pixel",
+      "frame_range": [
+        3,
+        4
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 5,
+      "behavior_indicator": "speed",
+      "behavior_value": 250.90013097348285,
+      "unit": "pixel/s",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 5,
+      "behavior_indicator": "velocity",
+      "behavior_value": 250.90013097348285,
+      "unit": "pixel/s",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 5,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 8.279702565823294,
+      "unit": "pixel",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 5,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 8.279702565823294,
+      "unit": "pixel",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 5,
+      "behavior_indicator": "speed",
+      "behavior_value": 79.11889634034205,
+      "unit": "pixel/s",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 5,
+      "behavior_indicator": "velocity",
+      "behavior_value": 79.11889634034205,
+      "unit": "pixel/s",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 5,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 2.6109230253987854,
+      "unit": "pixel",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 5,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 2.6109230253987854,
+      "unit": "pixel",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 5,
+      "behavior_indicator": "speed",
+      "behavior_value": 255.04405259236484,
+      "unit": "pixel/s",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 5,
+      "behavior_indicator": "velocity",
+      "behavior_value": -255.04405259236484,
+      "unit": "pixel/s",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 5,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 8.416451950238937,
+      "unit": "pixel",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 5,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": -8.416451950238937,
+      "unit": "pixel",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 5,
+      "behavior_indicator": "speed",
+      "behavior_value": 374.6866085698338,
+      "unit": "pixel/s",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 5,
+      "behavior_indicator": "velocity",
+      "behavior_value": 374.6866085698338,
+      "unit": "pixel/s",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 5,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 12.364655459997177,
+      "unit": "pixel",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 5,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 12.364655459997177,
+      "unit": "pixel",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 5,
+      "behavior_indicator": "speed",
+      "behavior_value": 285.8488365790477,
+      "unit": "pixel/s",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 5,
+      "behavior_indicator": "velocity",
+      "behavior_value": -285.8488365790477,
+      "unit": "pixel/s",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 5,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 9.433009606165895,
+      "unit": "pixel",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 5,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": -9.433009606165895,
+      "unit": "pixel",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 5,
+      "behavior_indicator": "speed",
+      "behavior_value": 411.19881337999,
+      "unit": "pixel/s",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 5,
+      "behavior_indicator": "velocity",
+      "behavior_value": 411.19881337999,
+      "unit": "pixel/s",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 5,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 13.56955796314679,
+      "unit": "pixel",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 5,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 13.56955796314679,
+      "unit": "pixel",
+      "frame_range": [
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 0,
+      "behavior_indicator": "speed",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 0,
+      "frame_id": 0,
+      "behavior_indicator": "velocity",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 0,
+      "frame_id": 0,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 0,
+      "frame_id": 0,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 1,
+      "frame_id": 0,
+      "behavior_indicator": "speed",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 1,
+      "frame_id": 0,
+      "behavior_indicator": "velocity",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 1,
+      "frame_id": 0,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 1,
+      "frame_id": 0,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 2,
+      "frame_id": 0,
+      "behavior_indicator": "speed",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 2,
+      "frame_id": 0,
+      "behavior_indicator": "velocity",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 2,
+      "frame_id": 0,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 2,
+      "frame_id": 0,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 3,
+      "frame_id": 0,
+      "behavior_indicator": "speed",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 3,
+      "frame_id": 0,
+      "behavior_indicator": "velocity",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 3,
+      "frame_id": 0,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 3,
+      "frame_id": 0,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 4,
+      "frame_id": 0,
+      "behavior_indicator": "speed",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 4,
+      "frame_id": 0,
+      "behavior_indicator": "velocity",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 4,
+      "frame_id": 0,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 4,
+      "frame_id": 0,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 5,
+      "frame_id": 0,
+      "behavior_indicator": "speed",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 5,
+      "frame_id": 0,
+      "behavior_indicator": "velocity",
+      "behavior_value": 0.0,
+      "unit": "pixel/s",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 5,
+      "frame_id": 0,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 5,
+      "frame_id": 0,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 0.0,
+      "unit": "pixel",
+      "frame_range": [
+        0
+      ],
+      "status": "insufficient_frames",
+      "reason": "first_observation",
+      "frame_step": 5
+    },
+    {
+      "track_id": 0,
+      "frame_id": 5,
+      "behavior_indicator": "speed",
+      "behavior_value": 198.12382766059068,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 0,
+      "frame_id": 5,
+      "behavior_indicator": "velocity",
+      "behavior_value": 198.12382766059068,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 0,
+      "frame_id": 5,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 32.88858075150735,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 0,
+      "frame_id": 5,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 32.88858075150735,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 1,
+      "frame_id": 5,
+      "behavior_indicator": "speed",
+      "behavior_value": 96.5830950309701,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 1,
+      "frame_id": 5,
+      "behavior_indicator": "velocity",
+      "behavior_value": 96.5830950309701,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 1,
+      "frame_id": 5,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 16.032806137776888,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 1,
+      "frame_id": 5,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": 16.032806137776888,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 2,
+      "frame_id": 5,
+      "behavior_indicator": "speed",
+      "behavior_value": 116.07121436582936,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 2,
+      "frame_id": 5,
+      "behavior_indicator": "velocity",
+      "behavior_value": -116.07121436582936,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 2,
+      "frame_id": 5,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 19.267836441842736,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 2,
+      "frame_id": 5,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": -19.267836441842736,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 3,
+      "frame_id": 5,
+      "behavior_indicator": "speed",
+      "behavior_value": 67.57511688539836,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 3,
+      "frame_id": 5,
+      "behavior_indicator": "velocity",
+      "behavior_value": -67.57511688539836,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 3,
+      "frame_id": 5,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 11.217478052590868,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 3,
+      "frame_id": 5,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": -11.217478052590868,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 4,
+      "frame_id": 5,
+      "behavior_indicator": "speed",
+      "behavior_value": 123.48414385872778,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 4,
+      "frame_id": 5,
+      "behavior_indicator": "velocity",
+      "behavior_value": -123.48414385872778,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 4,
+      "frame_id": 5,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 20.498383686518824,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 4,
+      "frame_id": 5,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": -20.498383686518824,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 5,
+      "frame_id": 5,
+      "behavior_indicator": "speed",
+      "behavior_value": 44.108888314457786,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 5,
+      "frame_id": 5,
+      "behavior_indicator": "velocity",
+      "behavior_value": -44.108888314457786,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 5,
+      "frame_id": 5,
+      "behavior_indicator": "step_distance",
+      "behavior_value": 7.322081106137554,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 5,
+      "frame_id": 5,
+      "behavior_indicator": "signed_distance",
+      "behavior_value": -7.322081106137554,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 0,
+      "frame_id": 5,
+      "behavior_indicator": "total_distance",
+      "behavior_value": 48.66259618902818,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 5,
+      "behavior_indicator": "total_signed_distance",
+      "behavior_value": 33.38736366865109,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 5,
+      "behavior_indicator": "mean_speed",
+      "behavior_value": 293.14794377164054,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 5,
+      "behavior_indicator": "mean_velocity",
+      "behavior_value": 201.12854171203858,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 5,
+      "behavior_indicator": "total_distance",
+      "behavior_value": 36.76873577412226,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 5,
+      "behavior_indicator": "total_signed_distance",
+      "behavior_value": 17.88678471388617,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 5,
+      "behavior_indicator": "mean_speed",
+      "behavior_value": 221.4982374840276,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 1,
+      "frame_id": 5,
+      "behavior_indicator": "mean_velocity",
+      "behavior_value": 107.75163205829888,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 5,
+      "behavior_indicator": "total_distance",
+      "behavior_value": 40.49066089186345,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 5,
+      "behavior_indicator": "total_signed_distance",
+      "behavior_value": -19.22329673374012,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 5,
+      "behavior_indicator": "mean_speed",
+      "behavior_value": 243.91945584442104,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 2,
+      "frame_id": 5,
+      "behavior_indicator": "mean_velocity",
+      "behavior_value": -115.80290307812592,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 5,
+      "behavior_indicator": "total_distance",
+      "behavior_value": 48.170619959035655,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 5,
+      "behavior_indicator": "total_signed_distance",
+      "behavior_value": -10.509976529436807,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 5,
+      "behavior_indicator": "mean_speed",
+      "behavior_value": 290.1842338280402,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 3,
+      "frame_id": 5,
+      "behavior_indicator": "mean_velocity",
+      "behavior_value": -63.31306280340346,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 5,
+      "behavior_indicator": "total_distance",
+      "behavior_value": 21.23156513921696,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 5,
+      "behavior_indicator": "total_signed_distance",
+      "behavior_value": -21.23156513921696,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 5,
+      "behavior_indicator": "mean_speed",
+      "behavior_value": 127.90089619218473,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 4,
+      "frame_id": 5,
+      "behavior_indicator": "mean_velocity",
+      "behavior_value": -127.90089619218473,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 5,
+      "behavior_indicator": "total_distance",
+      "behavior_value": 34.21672108486472,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 5,
+      "behavior_indicator": "total_signed_distance",
+      "behavior_value": -7.077605158571139,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 5,
+      "behavior_indicator": "mean_speed",
+      "behavior_value": 206.12466687293997,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 5,
+      "frame_id": 5,
+      "behavior_indicator": "mean_velocity",
+      "behavior_value": -42.63614277798194,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 1
+    },
+    {
+      "track_id": 0,
+      "frame_id": 5,
+      "behavior_indicator": "total_distance",
+      "behavior_value": 32.88858075150735,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 0,
+      "frame_id": 5,
+      "behavior_indicator": "total_signed_distance",
+      "behavior_value": 32.88858075150735,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 0,
+      "frame_id": 5,
+      "behavior_indicator": "mean_speed",
+      "behavior_value": 198.12382766059068,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 0,
+      "frame_id": 5,
+      "behavior_indicator": "mean_velocity",
+      "behavior_value": 198.12382766059068,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 1,
+      "frame_id": 5,
+      "behavior_indicator": "total_distance",
+      "behavior_value": 16.032806137776888,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 1,
+      "frame_id": 5,
+      "behavior_indicator": "total_signed_distance",
+      "behavior_value": 16.032806137776888,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 1,
+      "frame_id": 5,
+      "behavior_indicator": "mean_speed",
+      "behavior_value": 96.5830950309701,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 1,
+      "frame_id": 5,
+      "behavior_indicator": "mean_velocity",
+      "behavior_value": 96.5830950309701,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 2,
+      "frame_id": 5,
+      "behavior_indicator": "total_distance",
+      "behavior_value": 19.267836441842736,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 2,
+      "frame_id": 5,
+      "behavior_indicator": "total_signed_distance",
+      "behavior_value": -19.267836441842736,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 2,
+      "frame_id": 5,
+      "behavior_indicator": "mean_speed",
+      "behavior_value": 116.07121436582936,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 2,
+      "frame_id": 5,
+      "behavior_indicator": "mean_velocity",
+      "behavior_value": -116.07121436582936,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 3,
+      "frame_id": 5,
+      "behavior_indicator": "total_distance",
+      "behavior_value": 11.217478052590868,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 3,
+      "frame_id": 5,
+      "behavior_indicator": "total_signed_distance",
+      "behavior_value": -11.217478052590868,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 3,
+      "frame_id": 5,
+      "behavior_indicator": "mean_speed",
+      "behavior_value": 67.57511688539836,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 3,
+      "frame_id": 5,
+      "behavior_indicator": "mean_velocity",
+      "behavior_value": -67.57511688539836,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 4,
+      "frame_id": 5,
+      "behavior_indicator": "total_distance",
+      "behavior_value": 20.498383686518824,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 4,
+      "frame_id": 5,
+      "behavior_indicator": "total_signed_distance",
+      "behavior_value": -20.498383686518824,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 4,
+      "frame_id": 5,
+      "behavior_indicator": "mean_speed",
+      "behavior_value": 123.48414385872778,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 4,
+      "frame_id": 5,
+      "behavior_indicator": "mean_velocity",
+      "behavior_value": -123.48414385872778,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 5,
+      "frame_id": 5,
+      "behavior_indicator": "total_distance",
+      "behavior_value": 7.322081106137554,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 5,
+      "frame_id": 5,
+      "behavior_indicator": "total_signed_distance",
+      "behavior_value": -7.322081106137554,
+      "unit": "pixel",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 5,
+      "frame_id": 5,
+      "behavior_indicator": "mean_speed",
+      "behavior_value": 44.108888314457786,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 5,
+      "frame_id": 5,
+      "behavior_indicator": "mean_velocity",
+      "behavior_value": -44.108888314457786,
+      "unit": "pixel/s",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "ok",
+      "reason": "",
+      "frame_step": 5
+    },
+    {
+      "track_id": 0,
+      "frame_id": 5,
+      "behavior_indicator": "tail_beat_frequency",
+      "behavior_value": 0.0,
+      "unit": "Hz",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "insufficient_frames",
+      "reason": "too_short"
+    },
+    {
+      "track_id": 1,
+      "frame_id": 5,
+      "behavior_indicator": "tail_beat_frequency",
+      "behavior_value": 0.0,
+      "unit": "Hz",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "insufficient_frames",
+      "reason": "too_short"
+    },
+    {
+      "track_id": 2,
+      "frame_id": 5,
+      "behavior_indicator": "tail_beat_frequency",
+      "behavior_value": 0.0,
+      "unit": "Hz",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "insufficient_frames",
+      "reason": "too_short"
+    },
+    {
+      "track_id": 3,
+      "frame_id": 5,
+      "behavior_indicator": "tail_beat_frequency",
+      "behavior_value": 0.0,
+      "unit": "Hz",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "insufficient_frames",
+      "reason": "too_short"
+    },
+    {
+      "track_id": 4,
+      "frame_id": 5,
+      "behavior_indicator": "tail_beat_frequency",
+      "behavior_value": 0.0,
+      "unit": "Hz",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "insufficient_frames",
+      "reason": "too_short"
+    },
+    {
+      "track_id": 5,
+      "frame_id": 5,
+      "behavior_indicator": "tail_beat_frequency",
+      "behavior_value": 0.0,
+      "unit": "Hz",
+      "frame_range": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "insufficient_frames",
+      "reason": "too_short"
+    }
+  ]
+}
