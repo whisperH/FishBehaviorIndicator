@@ -10,7 +10,11 @@ from __future__ import annotations
 """
 
 import numpy as np
-from pycocotools import mask as mask_utils
+
+try:
+    from pycocotools import mask as mask_utils
+except ImportError:  # 普通游程数组和轮廓路径不依赖 pycocotools。
+    mask_utils = None
 
 
 def decode_compressed_rle(text: str) -> list[int]:
@@ -62,6 +66,10 @@ def rle_to_mask(segmentation: dict) -> np.ndarray:
     """把标准 segmentation 转成 HxW 的二值掩膜。"""
     if isinstance(segmentation["counts"], str):
         # pycocotools 负责处理 COCO 压缩 RLE 的符号扩展和游程还原。
+        if mask_utils is None:
+            raise ImportError(
+                "pycocotools is required to decode compressed RLE segmentation"
+            )
         decoded = mask_utils.decode(
             {
                 "size": [int(value) for value in segmentation["size"]],

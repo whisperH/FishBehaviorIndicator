@@ -9,25 +9,18 @@ gill_frequency.py 完成。
 import argparse
 import re
 import sys
+from importlib import import_module
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 
 VISUALIZATION_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = VISUALIZATION_DIR.parent
-if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
-
-import gill_frequency as analysis
-
 
 DEFAULT_HTML = VISUALIZATION_DIR / "gill_viewer.html"
-DEFAULT_DATA = (
-    PROJECT_ROOT
-    / analysis.RESULTS_DIRNAME
-    / analysis.GILL_RESULTS_DIRNAME
-    / analysis.GILL_DATA_FILENAME
-)
+DEFAULT_VIDEO = PROJECT_ROOT / "datasets" / "video.mp4"
+DEFAULT_ZIP = PROJECT_ROOT / "datasets" / "annotations_mot"
+DEFAULT_DATA = PROJECT_ROOT / "results" / "gill" / "gill_data.json"
 
 _VIDEO_PATH = Path()
 _DATA_BYTES = b"{}"
@@ -149,8 +142,8 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8768)
-    parser.add_argument("--video", default=str(analysis.DEFAULT_VIDEO))
-    parser.add_argument("--zip", default=str(analysis.DEFAULT_ZIP))
+    parser.add_argument("--video", default=str(DEFAULT_VIDEO))
+    parser.add_argument("--zip", default=str(DEFAULT_ZIP))
     parser.add_argument("--data", default=str(DEFAULT_DATA))
     parser.add_argument("--html", default=str(DEFAULT_HTML))
     parser.add_argument("--rebuild", action="store_true")
@@ -168,6 +161,9 @@ def main() -> None:
     if not html_path.is_file():
         raise FileNotFoundError(f"Viewer HTML not found: {html_path}")
     if args.rebuild or not data_path.is_file():
+        if str(PROJECT_ROOT) not in sys.path:
+            sys.path.insert(0, str(PROJECT_ROOT))
+        analysis = import_module("gill_frequency")
         analysis.run_analysis(video_path, Path(args.zip), data_path.parent)
 
     _VIDEO_PATH = video_path

@@ -2,8 +2,10 @@
 
 指标定义：对鱼体分割掩膜的所有前景像素执行 PCA，以最大特征值对应的特征
 向量作为鱼体主轴。
-- orientation_deg 为 0–180° 方向角；
-- fish_body_angle 为相对水平线的 0–90° 锐角。
+- 沿主轴统计宽度轮廓，作为鱼头方向的备用判断；
+- 可读取 SAM3 鱼头掩膜，选择与鱼体端点匹配的鱼头并修正头尾方向；
+- fish_body_angle / angle_horizontal_deg 为鱼体主轴与水平线的 0–90° 夹角。
+- orientation_deg / directed_angle_deg 保留头尾方向，用于箭头显示。
 
 主要数据流：
 标准 data 记录 -> SAM RLE 掩膜 -> 连通域清理 -> PCA 主轴 ->
@@ -11,17 +13,19 @@
 
 公开入口 calculate_fish_body_angle 只依赖标准 data 中的 SAM RLE，不运行
 视频、SAM3 模型或页面代码。文件中的 process_video 另外提供 MOT 框提示
-SAM3 的离线分割流程，用于生成逐帧角度和可视化掩膜数据。
+SAM3 的离线分割流程，并在同一次输出中整合可选的 SAM3 鱼头掩膜。
 """
 
 from __future__ import annotations
 
 import argparse
+import base64
 import ctypes
 import io
 import json
 import math
 import os
+import re
 import time
 import zipfile
 from contextlib import nullcontext
@@ -38,6 +42,8 @@ DEFAULT_MOT = ROOT / "datasets" / "angle"
 DEFAULT_CHECKPOINT = ROOT / "models" / "sam3.pt"
 DEFAULT_BPE = ROOT / "assets" / "bpe_simple_vocab_16e6.txt.gz"
 DEFAULT_OUTPUT = ROOT / "results" / "angle"
+DEFAULT_HEAD_MASKS = DEFAULT_OUTPUT / "head_mask_shapes.json"
+DEFAULT_VIEWER = ROOT / "visualization" / "angle_viewer.html"
 
 
 def preload_windows_runtime() -> None:
@@ -307,17 +313,293 @@ def select_best_mask(
     return best[1], best[2], best[3]
 
 
+def normalize_angle_deg(value: float) -> float:
+    """把角度规范化到 [0, 360)，并把浮点误差产生的 360° 转为 0°。"""
+    normalized = float(value) % 360.0
+    if math.isclose(normalized, 0.0, abs_tol=1e-9) or math.isclose(
+        normalized, 360.0, abs_tol=1e-9
+    ):
+        return 0.0
+    return normalized
+
+
+def horizontal_angle(directed: float) -> float:
+    """把带方向角折叠为鱼体主轴与水平线的 0–90° 无符号夹角。"""
+    half_turn = directed % 180.0
+    return min(half_turn, 180.0 - half_turn)
+
+
+def fill_polygons(
+    polygons: list[list[list[int]]],
+    width: int,
+    height: int,
+) -> np.ndarray:
+    """把 JSON 多边形恢复为指定视频尺寸的二值掩膜。"""
+    mask = np.zeros((height, width), dtype=np.uint8)
+    for polygon in polygons:
+        points = np.asarray(polygon, dtype=np.int32)
+        if len(points) >= 3:
+            cv2.fillPoly(mask, [points], 1)
+    return mask
+
+
+def body_mask_axis(body_mask: np.ndarray) -> dict[str, object] | None:
+    """计算头尾匹配所需的 PCA 主轴、端点和两端宽度。"""
+    ys, xs = np.nonzero(body_mask)
+    if len(xs) < 30:
+        return None
+    points = np.column_stack((xs, ys)).astype(np.float64)
+    center = points.mean(axis=0)
+    centered = points - center
+    covariance = np.cov(centered, rowvar=False)
+    eigenvalues, eigenvectors = np.linalg.eigh(covariance)
+    order = np.argsort(eigenvalues)[::-1]
+    major_vector = eigenvectors[:, order[0]]
+    minor_vector = eigenvectors[:, order[1]]
+    projected = centered @ major_vector
+    perpendicular = centered @ minor_vector
+    low = float(np.percentile(projected, 2.0))
+    high = float(np.percentile(projected, 98.0))
+    span = high - low
+    if span < 2.0:
+        return None
+    normalized = np.clip((projected - low) / span, 0.0, 0.999999)
+    bins = 20
+    bin_index = (normalized * bins).astype(int)
+    widths = np.full(bins, np.nan, dtype=np.float64)
+    for index in range(bins):
+        selected = perpendicular[bin_index == index]
+        if selected.size >= 3:
+            low_width, high_width = np.percentile(selected, [10.0, 90.0])
+            widths[index] = float(high_width - low_width)
+    left_width = (
+        float(np.nanmean(widths[:6]))
+        if np.isfinite(widths[:6]).any()
+        else 0.0
+    )
+    right_width = (
+        float(np.nanmean(widths[-6:]))
+        if np.isfinite(widths[-6:]).any()
+        else 0.0
+    )
+    return {
+        "center": center,
+        "major": major_vector,
+        "low": low,
+        "high": high,
+        "span": span,
+        "low_point": center + major_vector * low,
+        "high_point": center + major_vector * high,
+        "left_width": left_width,
+        "right_width": right_width,
+    }
+
+
+def choose_head_candidate(
+    body_mask: np.ndarray,
+    axis: dict[str, object],
+    head_samples: list[dict],
+    width: int,
+    height: int,
+) -> dict[str, object] | None:
+    """从同帧鱼头掩膜中选择与鱼体一个端点最匹配的候选。"""
+    center = np.asarray(axis["center"], dtype=np.float64)
+    major = np.asarray(axis["major"], dtype=np.float64)
+    span = float(axis["span"])
+    best: tuple[float, dict[str, object]] | None = None
+    for sample in head_samples:
+        head_mask = fill_polygons(sample.get("polygons", []), width, height)
+        head_area = int(head_mask.sum())
+        if head_area < 30:
+            continue
+        intersection = int(np.logical_and(body_mask, head_mask).sum())
+        overlap = intersection / head_area
+        if overlap < 0.25:
+            continue
+        ys, xs = np.nonzero(head_mask)
+        head_center = np.asarray([xs.mean(), ys.mean()], dtype=np.float64)
+        projection = float((head_center - center) @ major)
+        endpoint_distance = min(
+            abs(projection - float(axis["low"])),
+            abs(projection - float(axis["high"])),
+        )
+        endpoint_score = float(
+            np.clip(1.0 - endpoint_distance / max(1.0, span * 0.45), 0.0, 1.0)
+        )
+        score = (
+            0.50 * overlap
+            + 0.30 * endpoint_score
+            + 0.20 * float(sample.get("score", 0.0))
+        )
+        candidate = {
+            "sample": sample,
+            "score": score,
+            "overlap": overlap,
+            "head_is_high": projection >= 0.0,
+            "head_center_x": float(head_center[0]),
+            "head_center_y": float(head_center[1]),
+        }
+        if best is None or score > best[0]:
+            best = (score, candidate)
+    return best[1] if best else None
+
+
+def apply_head_direction(
+    rows: list[dict[str, object]],
+    mask_samples: list[dict[str, object]],
+    head_payload: dict | None,
+    width: int,
+    height: int,
+) -> dict[str, int]:
+    """用预计算的 SAM3 鱼头掩膜修正头尾方向，失败时保留宽度轮廓结果。"""
+    row_by_key = {
+        (int(row["frame"]), int(row["track_id"])): row
+        for row in rows
+        if str(row.get("valid", "")).lower() == "true"
+    }
+    for row in row_by_key.values():
+        row["direction_source"] = "width_profile_fallback"
+    for sample in mask_samples:
+        sample["direction_source"] = "width_profile_fallback"
+
+    valid_observations = len(row_by_key)
+    matched = 0
+    changed = 0
+    if head_payload is None:
+        return {
+            "valid_observations": valid_observations,
+            "matched": 0,
+            "fallback": valid_observations,
+            "changed": 0,
+        }
+
+    head_samples_by_frame: dict[int, list[dict]] = {}
+    for sample in head_payload.get("samples", []):
+        head_samples_by_frame.setdefault(int(sample["frame"]), []).append(sample)
+
+    for sample in mask_samples:
+        key = (int(sample["frame"]), int(sample["track_id"]))
+        row = row_by_key.get(key)
+        if row is None:
+            continue
+        body_mask = fill_polygons(sample.get("polygons", []), width, height)
+        if not body_mask.any():
+            continue
+        axis = body_mask_axis(body_mask)
+        if axis is None:
+            continue
+        match = choose_head_candidate(
+            body_mask,
+            axis,
+            head_samples_by_frame.get(key[0], []),
+            width,
+            height,
+        )
+        if match is None:
+            continue
+
+        if bool(match["head_is_high"]):
+            head_point = np.asarray(axis["high_point"], dtype=np.float64)
+            selected_tail_point = np.asarray(axis["low_point"], dtype=np.float64)
+            head_vector = np.asarray(axis["major"], dtype=np.float64)
+            head_width = float(axis["right_width"])
+            tail_width = float(axis["left_width"])
+        else:
+            head_point = np.asarray(axis["low_point"], dtype=np.float64)
+            selected_tail_point = np.asarray(axis["high_point"], dtype=np.float64)
+            head_vector = -np.asarray(axis["major"], dtype=np.float64)
+            head_width = float(axis["left_width"])
+            tail_width = float(axis["right_width"])
+
+        directed = normalize_angle_deg(
+            math.degrees(math.atan2(float(head_vector[1]), float(head_vector[0])))
+        )
+        previous = float(
+            row.get("directed_angle_deg")
+            or row.get("orientation_deg")
+            or 0.0
+        )
+        if abs(((directed - previous + 180.0) % 360.0) - 180.0) > 90.0:
+            changed += 1
+        matched += 1
+        updates: dict[str, object] = {
+            "angle_horizontal_deg": horizontal_angle(directed),
+            "orientation_deg": directed,
+            "directed_angle_deg": directed,
+            "head_x": float(head_point[0]),
+            "head_y": float(head_point[1]),
+            "tail_x": float(selected_tail_point[0]),
+            "tail_y": float(selected_tail_point[1]),
+            "head_width": head_width,
+            "tail_width": tail_width,
+            "direction_source": "sam3_head_mask",
+            "head_match_score": float(match["score"]),
+            "head_match_overlap": float(match["overlap"]),
+        }
+        row.update(updates)
+        sample.update(updates)
+
+    return {
+        "valid_observations": valid_observations,
+        "matched": matched,
+        "fallback": valid_observations - matched,
+        "changed": changed,
+    }
+
+
+def replace_script_data(html: str, element_id: str, text: str) -> str:
+    """替换角度页面中指定 id 的 Base64 数据块。"""
+    encoded = base64.b64encode(text.encode("utf-8-sig")).decode("ascii")
+    pattern = re.compile(
+        rf'(<script id="{re.escape(element_id)}" type="text/plain">).*?(</script>)',
+        re.DOTALL,
+    )
+    replaced, count = pattern.subn(rf"\g<1>{encoded}\2", html)
+    if count != 1:
+        raise RuntimeError(f"Expected one {element_id} script block, found {count}")
+    return replaced
+
+
+def update_viewer_data(viewer_path: Path, angle_path: Path, mask_path: Path) -> None:
+    """把最终角度和掩膜数据嵌入角度可视化页面。"""
+    if not viewer_path.is_file():
+        return
+    angle_text = angle_path.read_text(encoding="utf-8-sig")
+    mask_text = mask_path.read_text(encoding="utf-8")
+    html = viewer_path.read_text(encoding="utf-8")
+    html = replace_script_data(html, "angle-data", angle_text)
+    html = replace_script_data(html, "mask-data", mask_text)
+    viewer_path.write_text(html, encoding="utf-8")
+
+
 def mask_orientation(
     mask: np.ndarray,
-) -> tuple[float, float, float, float, float, float, float, float, float] | None:
-    """用掩膜像素 PCA 计算鱼体中心、角度、伸长率和主轴线段。
+) -> tuple[
+    float,
+    float,
+    float,
+    float,
+    float,
+    float,
+    float,
+    float,
+    float,
+    float,
+    float,
+] | None:
+    """计算鱼体中心、头尾方向角、伸长率和头尾端点。
+
+    先通过 PCA 得到鱼体主轴，再把掩膜投影到主轴上并按位置分箱统计
+    鱼体宽度。鱼头一侧通常更宽，因此宽度均值较大的端点判为头端。
+    指标角度为鱼体主轴与水平线的无符号夹角；头尾方向另用于箭头显示。
 
     Returns:
     - center_x, center_y: 掩膜质心。
-    - horizontal_angle: 与图像水平线的无符号锐角，范围 0–90°。
-    - orientation: 0–180° 的主轴方向角。
+    - horizontal_angle: 鱼体主轴与水平线的无符号夹角，范围 0–90°。
+    - directed_angle: 从尾端指向头端的方向角，范围 0–360°。
     - elongation: 主次特征值之比的平方根，越大表示鱼体越细长。
-    - line_x1/y1/line_x2/y2: 用于绘制的 PCA 主轴两端点。
+    - tail_x, tail_y, head_x, head_y: 尾端和头端坐标。
+    - head_width, tail_width: 两端附近宽度轮廓的均值。
     """
     ys, xs = np.nonzero(mask)
     if len(xs) < 30:
@@ -333,31 +615,84 @@ def mask_orientation(
     major_value = max(float(eigenvalues[order[0]]), 1e-9)
     minor_value = max(float(eigenvalues[order[1]]), 1e-9)
     major_vector = eigenvectors[:, order[0]]
-    # 图像坐标系 y 轴向下；方向角仍以 0–180° 表示，不区分鱼头鱼尾。
-    orientation = math.degrees(
-        math.atan2(float(major_vector[1]), float(major_vector[0]))
-    ) % 180.0
-    # 主轴正反方向无意义，因此与水平线的夹角取 0–90° 锐角。
-    horizontal_angle = min(orientation, 180.0 - orientation)
+    minor_vector = eigenvectors[:, order[1]]
     elongation = math.sqrt(major_value / minor_value)
 
-    # 将掩膜点投影到主轴，用 2%–98% 分位点确定绘制线段的两端。
+    # 将掩膜点投影到主轴和副轴，用于定位两端并计算局部宽度轮廓。
     projected = centered @ major_vector
+    perpendicular = centered @ minor_vector
     low = float(np.percentile(projected, 2.0))
     high = float(np.percentile(projected, 98.0))
-    half_length = max(1.0, (high - low) / 2.0)
-    dx = float(major_vector[0]) * half_length
-    dy = float(major_vector[1]) * half_length
+    span = high - low
+    if span < 2.0:
+        return None
+
+    normalized = (projected - low) / span
+    profile_bins = 20
+    bin_index = np.clip(
+        (normalized * profile_bins).astype(int),
+        0,
+        profile_bins - 1,
+    )
+    widths = np.full(profile_bins, np.nan, dtype=np.float64)
+    counts = np.zeros(profile_bins, dtype=np.int64)
+    for index in range(profile_bins):
+        selected = perpendicular[bin_index == index]
+        counts[index] = selected.size
+        if selected.size >= 3:
+            low_width, high_width = np.percentile(selected, [10.0, 90.0])
+            widths[index] = float(high_width - low_width)
+
+    end_bins = max(2, int(round(profile_bins * 0.30)))
+    left_widths = widths[:end_bins]
+    right_widths = widths[-end_bins:]
+    left_width = (
+        float(np.nanmean(left_widths))
+        if np.isfinite(left_widths).any()
+        else 0.0
+    )
+    right_width = (
+        float(np.nanmean(right_widths))
+        if np.isfinite(right_widths).any()
+        else 0.0
+    )
+    left_count = int(counts[:end_bins].sum())
+    right_count = int(counts[-end_bins:].sum())
+    head_is_right = (right_width, right_count) >= (left_width, left_count)
+
+    low_point = center + major_vector * low
+    high_point = center + major_vector * high
+    if head_is_right:
+        head_x, head_y = high_point
+        tail_x, tail_y = low_point
+        head_vector = major_vector
+        head_width = right_width
+        tail_width = left_width
+    else:
+        head_x, head_y = low_point
+        tail_x, tail_y = high_point
+        head_vector = -major_vector
+        head_width = left_width
+        tail_width = right_width
+
+    # 图像坐标 y 轴向下：0° 向右、90° 向下、180° 向左、270° 向上。
+    directed_angle = normalize_angle_deg(
+        math.degrees(math.atan2(float(head_vector[1]), float(head_vector[0])))
+    )
+    half_turn_angle = directed_angle % 180.0
+    horizontal_angle = min(half_turn_angle, 180.0 - half_turn_angle)
     return (
         float(center[0]),
         float(center[1]),
         horizontal_angle,
-        orientation,
+        directed_angle,
         elongation,
-        float(center[0] - dx),
-        float(center[1] - dy),
-        float(center[0] + dx),
-        float(center[1] + dy),
+        float(tail_x),
+        float(tail_y),
+        float(head_x),
+        float(head_y),
+        float(head_width),
+        float(tail_width),
     )
 
 
@@ -370,9 +705,12 @@ def calculate_fish_body_angle(data: list[dict]) -> dict[str, list[dict[str, obje
 
     每帧返回一条标准行为记录：
     - behavior_indicator 固定为 fish_body_angle。
-    - behavior_value 为掩膜 PCA 主轴相对图像水平线的无符号锐角，范围
-      0–90°，单位 degree。
+    - behavior_value 为鱼体主轴与水平线的无符号夹角，范围 0–90°。
+      图像坐标中 0° 向右、90° 向下、180° 向左、270° 向上。
     - frame_range 只包含当前帧。
+
+    鱼头端通过主轴方向的宽度轮廓判断：将掩膜投影到主轴上分成 20 段，
+    比较两端各 30% 范围的平均宽度，较宽的一端作为鱼头。
 
     掩膜缺失、为空、像素不足或解码失败时，behavior_value 返回 0。
     """
@@ -391,20 +729,20 @@ def calculate_fish_body_angle(data: list[dict]) -> dict[str, list[dict[str, obje
             try:
                 orientation = mask_orientation(rle_to_mask(segmentation))
                 if orientation is not None:
-                    angle = float(orientation[2])
+                    directed_angle = orientation[2]
+                    angle = float(directed_angle)
             except (ValueError, KeyError, TypeError):
                 # 单帧分割异常不阻断整批数据，按无效观测返回 0。
                 angle = 0.0
-        output.append(
-            {
-                "track_id": int(record["track_id"]),
-                "frame_id": frame_id,
-                "behavior_indicator": "fish_body_angle",
-                "behavior_value": round(angle, 6),
-                "unit": "degree",
-                "frame_range": [frame_id],
-            }
-        )
+        result = {
+            "track_id": int(record["track_id"]),
+            "frame_id": frame_id,
+            "behavior_indicator": "fish_body_angle",
+            "behavior_value": round(angle, 6),
+            "unit": "degree",
+            "frame_range": [frame_id],
+        }
+        output.append(result)
     return {"data": output}
 
 
@@ -505,8 +843,36 @@ def add_box_prompt(
     return add_box_prompts(processor, [box], state, text_prompt)
 
 
+def circular_mean_deg(values: np.ndarray) -> float:
+    """计算 0–360° 方向角的圆周均值。"""
+    radians = np.deg2rad(values)
+    return normalize_angle_deg(
+        np.rad2deg(np.arctan2(np.sin(radians).mean(), np.cos(radians).mean()))
+    )
+
+
+def circular_median_deg(values: np.ndarray) -> float:
+    """选择到所有方向角圆周距离之和最小的样本作为圆周中位数。"""
+    differences = (
+        (values[:, None] - values[None, :] + 180.0) % 360.0
+    ) - 180.0
+    return float(values[np.abs(differences).sum(axis=1).argmin()])
+
+
+def circular_std_deg(values: np.ndarray) -> float:
+    """按平均合向量长度计算方向角的圆周标准差。"""
+    radians = np.deg2rad(values)
+    resultant = math.hypot(
+        float(np.sin(radians).mean()),
+        float(np.cos(radians).mean()),
+    )
+    return float(
+        np.rad2deg(math.sqrt(-2.0 * math.log(max(resultant, 1e-12))))
+    )
+
+
 def summarize_results(dataframe: pd.DataFrame) -> pd.DataFrame:
-    """按鱼汇总有效帧的角度均值、中位数、标准差和极值。"""
+    """按鱼汇总有效帧的方向角均值、中位数、标准差和极值。"""
     valid = dataframe[dataframe["valid"]].copy()
     if valid.empty:
         return pd.DataFrame(
@@ -549,12 +915,42 @@ def process_video(args: argparse.Namespace) -> None:
     bpe = Path(args.bpe).resolve()
     output_dir = Path(args.output).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
+    head_mask_output = output_dir / "head_mask_shapes.json"
+    head_masks_arg = getattr(args, "head_masks", None)
+    if head_masks_arg:
+        head_mask_path = Path(head_masks_arg).resolve()
+        if not head_mask_path.is_file():
+            raise FileNotFoundError(f"SAM3 head masks not found: {head_mask_path}")
+    else:
+        candidates = (head_mask_output, DEFAULT_HEAD_MASKS)
+        head_mask_path = next(
+            (
+                path.resolve()
+                for path in candidates
+                if path.is_file()
+            ),
+            None,
+        )
+    head_payload: dict | None = None
+    if head_mask_path is not None:
+        head_payload = json.loads(head_mask_path.read_text(encoding="utf-8"))
 
     tracking = load_mot(mot_path)
     video_info = read_video_info(video_path)
     width = int(video_info["width"])
     height = int(video_info["height"])
     fps = float(video_info["fps"])
+    if head_payload is not None:
+        head_meta = head_payload.get("meta", {})
+        head_width = int(head_meta.get("width", 0) or 0)
+        head_height = int(head_meta.get("height", 0) or 0)
+        if head_width and head_height and (
+            head_width != width or head_height != height
+        ):
+            raise ValueError(
+                "SAM3 head masks use a different frame size: "
+                f"{head_width}x{head_height}, video is {width}x{height}"
+            )
     # MOT 标注可能基于不同分辨率，需要把框同步缩放到视频像素坐标。
     scale_x = width / args.mot_width
     scale_y = height / args.mot_height
@@ -581,6 +977,10 @@ def process_video(args: argparse.Namespace) -> None:
     )
     print(f"Tracks: {sorted(tracking['track_id'].unique().tolist())}")
     print(f"Device: {device}  FP16: {args.fp16 and device == 'cuda'}")
+    if head_mask_path is None:
+        print("SAM3 head masks: not found; using width-profile fallback")
+    else:
+        print(f"SAM3 head masks: {head_mask_path}")
 
     model, processor = build_model(
         checkpoint=checkpoint,
@@ -688,12 +1088,14 @@ def process_video(args: argparse.Namespace) -> None:
                     center_x,
                     center_y,
                     horizontal_angle,
-                    orientation_angle,
+                    directed_angle,
                     elongation,
-                    line_x1,
-                    line_y1,
-                    line_x2,
-                    line_y2,
+                    tail_x,
+                    tail_y,
+                    head_x,
+                    head_y,
+                    head_width,
+                    tail_width,
                 ) = orientation
                 base_row.update(
                     {
@@ -702,8 +1104,15 @@ def process_video(args: argparse.Namespace) -> None:
                         "center_x": center_x,
                         "center_y": center_y,
                         "angle_horizontal_deg": horizontal_angle,
-                        "orientation_deg": orientation_angle,
+                        "orientation_deg": directed_angle,
+                        "directed_angle_deg": directed_angle,
                         "elongation": elongation,
+                        "head_x": head_x,
+                        "head_y": head_y,
+                        "tail_x": tail_x,
+                        "tail_y": tail_y,
+                        "head_width": head_width,
+                        "tail_width": tail_width,
                     }
                 )
                 rows.append(base_row)
@@ -717,8 +1126,15 @@ def process_video(args: argparse.Namespace) -> None:
                             "score": score,
                             "box_iou": overlap,
                             "angle_horizontal_deg": horizontal_angle,
-                            "orientation_deg": orientation_angle,
+                            "orientation_deg": directed_angle,
+                            "directed_angle_deg": directed_angle,
                             "elongation": elongation,
+                            "head_x": head_x,
+                            "head_y": head_y,
+                            "tail_x": tail_x,
+                            "tail_y": tail_y,
+                            "head_width": head_width,
+                            "tail_width": tail_width,
                             "polygons": polygons,
                         }
                     )
@@ -740,6 +1156,48 @@ def process_video(args: argparse.Namespace) -> None:
     finally:
         capture.release()
 
+    row_by_key = {
+        (int(row["frame"]), int(row["track_id"])): row
+        for row in rows
+        if bool(row.get("valid", False))
+    }
+    synchronized_keys = (
+        "center_x",
+        "center_y",
+        "angle_horizontal_deg",
+        "orientation_deg",
+        "directed_angle_deg",
+        "elongation",
+        "head_x",
+        "head_y",
+        "tail_x",
+        "tail_y",
+        "head_width",
+        "tail_width",
+    )
+    for sample in mask_samples:
+        row = row_by_key.get((int(sample["frame"]), int(sample["track_id"])))
+        if row is None:
+            continue
+        for key in synchronized_keys:
+            sample[key] = row[key]
+    head_stats = apply_head_direction(
+        rows,
+        mask_samples,
+        head_payload,
+        width,
+        height,
+    )
+    if head_payload is not None:
+        head_mask_output.write_text(
+            json.dumps(
+                head_payload,
+                ensure_ascii=False,
+                separators=(",", ":"),
+            ),
+            encoding="utf-8",
+        )
+
     dataframe = pd.DataFrame(rows)
     csv_path = output_dir / "frame_angles.csv"
     dataframe.to_csv(csv_path, index=False, encoding="utf-8-sig")
@@ -757,6 +1215,13 @@ def process_video(args: argparse.Namespace) -> None:
                     "frame_stride": args.stride,
                     "width": width,
                     "height": height,
+                    "head_mask_source": (
+                        str(head_mask_path)
+                        if head_mask_path is not None
+                        else None
+                    ),
+                    "head_matched": head_stats["matched"],
+                    "head_fallback": head_stats["fallback"],
                 },
                 "samples": mask_samples,
             },
@@ -788,9 +1253,27 @@ def process_video(args: argparse.Namespace) -> None:
             "text_prompt": args.text_prompt,
             "elapsed_seconds": round(elapsed_seconds, 2),
             "angle_definition": (
-                "Unsigned angle between the mask PCA major axis and the image "
-                "horizontal axis, in degrees from 0 to 90."
+                "Unsigned angle between the fish-body principal axis and the "
+                "horizontal image direction, in degrees from 0 to 90. The "
+                "head endpoint is retained separately for direction arrows."
             ),
+            "angle_method": (
+                "pca_sam3_head_with_width_profile_fallback"
+                if head_payload is not None
+                else "pca_width_profile"
+            ),
+            "head_detection": (
+                "SAM3 fish-head mask with width-profile fallback"
+                if head_payload is not None
+                else "width profile"
+            ),
+            "head_mask_source": (
+                str(head_mask_path) if head_mask_path is not None else None
+            ),
+            "sam3_head_matched_observations": head_stats["matched"],
+            "sam3_head_fallback_observations": head_stats["fallback"],
+            "sam3_head_valid_observations": head_stats["valid_observations"],
+            "sam3_head_direction_changed": head_stats["changed"],
         },
         "tracks": summary.to_dict(orient="records"),
     }
@@ -798,11 +1281,18 @@ def process_video(args: argparse.Namespace) -> None:
     json_path.write_text(
         json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8"
     )
+    viewer_path = Path(getattr(args, "viewer", str(DEFAULT_VIEWER))).resolve()
+    update_viewer_data(viewer_path, csv_path, mask_path)
 
     print(f"Saved: {csv_path}")
     print(f"Saved: {summary_path}")
     print(f"Saved: {mask_path}")
     print(f"Saved: {json_path}")
+    print(
+        "SAM3 head matched "
+        f"{head_stats['matched']}/{head_stats['valid_observations']} "
+        f"observations; direction changed in {head_stats['changed']}"
+    )
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -817,6 +1307,15 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--checkpoint", default=str(DEFAULT_CHECKPOINT))
     parser.add_argument("--bpe", default=str(DEFAULT_BPE))
     parser.add_argument("--output", default=str(DEFAULT_OUTPUT))
+    parser.add_argument(
+        "--head-masks",
+        default=None,
+        help=(
+            "optional SAM3 fish-head mask_shapes.json; when omitted, "
+            "output/head_mask_shapes.json and DEFAULT_HEAD_MASKS are tried"
+        ),
+    )
+    parser.add_argument("--viewer", default=str(DEFAULT_VIEWER))
     parser.add_argument("--device", choices=("auto", "cuda", "cpu"), default="auto")
     parser.add_argument(
         "--stride",

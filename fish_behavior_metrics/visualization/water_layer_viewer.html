@@ -327,6 +327,7 @@
       let surfaceY = Number(surfaceInput.value);
       let bottomY = Number(bottomInput.value);
 
+
       function decode(id) {
         const binary = atob(document.getElementById(id).textContent.trim());
         return new TextDecoder("utf-8").decode(

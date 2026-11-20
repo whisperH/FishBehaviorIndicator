@@ -1,0 +1,948 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>鱼体中心运动速度</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --background: light-dark(#f5f7f6, #101514);
+      --foreground: light-dark(#18211f, #e8efec);
+      --muted: light-dark(#e8eeeb, #1c2825);
+      --muted-foreground: light-dark(#60706a, #9eb0a9);
+      --border: light-dark(#d2ddd8, #30413c);
+      --series-1: light-dark(#0d887d, #52d6c8);
+      --series-2: light-dark(#c66524, #ffad6f);
+      --series-3: light-dark(#3269bb, #7eabff);
+      --series-4: light-dark(#ad3857, #ff829a);
+      --series-5: light-dark(#7555ae, #bca4ff);
+      --series-6: light-dark(#78831a, #cddd58);
+      --track: light-dark(rgba(13, 136, 125, .10), rgba(82, 214, 200, .12));
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--foreground);
+      font-family: Inter, "Segoe UI", "Microsoft YaHei", sans-serif;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    button, select { font: inherit; }
+    .page {
+      width: min(1400px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 22px 0 42px;
+    }
+    .page-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    h1, h2, p { margin-top: 0; }
+    h1 { margin-bottom: 3px; font-size: 28px; font-weight: 500; letter-spacing: 0; }
+    h2 { margin-bottom: 10px; font-size: 18px; font-weight: 500; letter-spacing: 0; }
+    .subtle { color: var(--muted-foreground); }
+    .meta {
+      color: var(--muted-foreground);
+      text-align: right;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+    .video-section {
+      padding: 20px 0 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .video-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #050808;
+    }
+    video, canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+    video { object-fit: contain; background: #050808; }
+    canvas { pointer-events: none; }
+    .video-controls {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-top: 12px;
+    }
+    .btn {
+      min-height: 36px;
+      padding: 7px 12px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: transparent;
+      color: var(--foreground);
+      cursor: pointer;
+    }
+    .btn:hover { background: var(--muted); }
+    .btn:focus-visible, .legend-button:focus-visible {
+      outline: 2px solid var(--series-1);
+      outline-offset: 2px;
+    }
+    .btn.primary { border-color: var(--foreground); }
+    .video-time {
+      min-width: 190px;
+      font-variant-numeric: tabular-nums;
+    }
+    .overlay-status {
+      margin-left: auto;
+      color: var(--muted-foreground);
+    }
+    .live-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      padding: 14px 0 2px;
+    }
+    .live-summary div { min-width: 100px; }
+    .live-summary span {
+      display: block;
+      color: var(--muted-foreground);
+      font-size: 11px;
+    }
+    .live-summary strong {
+      display: block;
+      font-size: 19px;
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+    }
+    .chart-section, .overview-section, .table-section {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      margin-bottom: 8px;
+    }
+    .legend-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 30px;
+      padding: 2px;
+      border: 0;
+      background: transparent;
+      color: var(--foreground);
+      cursor: pointer;
+    }
+    .legend-button[aria-pressed="false"] { opacity: .34; }
+    .swatch {
+      width: 18px;
+      height: 3px;
+      border-radius: 2px;
+      background: currentColor;
+    }
+    .chart-wrap { position: relative; min-height: 330px; }
+    .chart-svg {
+      display: block;
+      width: 100%;
+      overflow: visible;
+    }
+    .chart-tooltip {
+      position: absolute;
+      z-index: 3;
+      max-width: 220px;
+      padding: 7px 9px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: var(--background);
+      color: var(--foreground);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, .16);
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+      pointer-events: none;
+      opacity: 0;
+    }
+    .chart-tooltip.visible { opacity: 1; }
+    .overview-list { display: grid; gap: 10px; }
+    .overview-row {
+      display: grid;
+      grid-template-columns: 74px minmax(0, 1fr) 150px;
+      align-items: center;
+      gap: 12px;
+    }
+    .overview-label {
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+    .overview-track {
+      height: 16px;
+      overflow: hidden;
+      border-radius: 8px;
+      background: var(--muted);
+    }
+    .overview-bar {
+      height: 100%;
+      min-width: 2px;
+      border-radius: 8px;
+      background: currentColor;
+    }
+    .overview-value {
+      color: var(--muted-foreground);
+      font-size: 12px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    .table-scroll { overflow-x: auto; }
+    table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
+    }
+    th, td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: right;
+    }
+    th:first-child, td:first-child { text-align: left; }
+    th { color: var(--muted-foreground); font-weight: 500; }
+    .load-error {
+      margin: 20px 0;
+      padding: 12px 14px;
+      border-left: 3px solid var(--series-4);
+      background: var(--muted);
+      color: var(--foreground);
+    }
+    [hidden] { display: none !important; }
+    @media (max-width: 760px) {
+      .page { width: min(100% - 20px, 1400px); padding-top: 14px; }
+      .page-header { align-items: flex-start; flex-direction: column; }
+      .meta { text-align: left; white-space: normal; }
+      .overlay-status { margin-left: 0; width: 100%; }
+      .overview-row { grid-template-columns: 64px minmax(0, 1fr); }
+      .overview-value { grid-column: 2; text-align: left; }
+      .live-summary { gap: 18px; }
+      .live-summary div { min-width: 86px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="page-header">
+      <div>
+        <h1>鱼体中心运动速度</h1>
+        <p class="subtle">掩膜前景像素几何中心 · 10 帧滑动窗口线性拟合</p>
+      </div>
+      <div class="meta" id="page-meta">正在载入结果</div>
+    </header>
+
+    <div class="load-error" id="load-error" role="alert" hidden></div>
+
+    <section class="video-section" aria-label="鱼体中心速度视频">
+      <div class="video-frame">
+        <video id="speed-video" controls muted playsinline preload="metadata" poster="/poster">
+          <source src="/video" type="video/mp4">
+        </video>
+        <canvas id="speed-overlay" aria-label="鱼体几何中心和速度矢量叠加层"></canvas>
+      </div>
+      <div class="video-controls">
+        <button class="btn primary" id="play-toggle" type="button">播放</button>
+        <div class="video-time">
+          <span id="frame-status">第 1 帧</span>
+          <span class="subtle" id="time-status">0.00 s</span>
+        </div>
+        <select class="btn" id="speed-select" aria-label="播放速度">
+          <option value="0.5">0.5×</option>
+          <option value="1" selected>1×</option>
+          <option value="1.5">1.5×</option>
+          <option value="2">2×</option>
+        </select>
+        <span class="overlay-status" id="overlay-status">等待数据载入</span>
+      </div>
+      <div class="live-summary" aria-live="polite">
+        <div><span>当前可见</span><strong id="live-count">—</strong></div>
+        <div><span>平均速度</span><strong id="live-mean">—</strong></div>
+        <div><span>最高速度</span><strong id="live-max">—</strong></div>
+        <div><span>平均方向</span><strong id="live-direction">—</strong></div>
+      </div>
+    </section>
+
+    <section class="chart-section" aria-labelledby="speed-chart-title">
+      <h2 id="speed-chart-title">10 帧窗口速度大小时间序列</h2>
+      <div class="legend" id="legend" aria-label="轨迹显示开关"></div>
+      <div class="chart-wrap">
+        <svg class="chart-svg" id="speed-chart" role="img" aria-labelledby="speed-chart-title"></svg>
+        <div class="chart-tooltip" id="chart-tooltip" role="tooltip"></div>
+      </div>
+    </section>
+
+    <section class="overview-section" aria-labelledby="speed-overview-title">
+      <h2 id="speed-overview-title">轨迹平均速度与方向</h2>
+      <div class="overview-list" id="speed-overview"></div>
+    </section>
+
+    <section class="table-section" aria-labelledby="speed-summary-title">
+      <h2 id="speed-summary-title">速度汇总</h2>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>轨迹</th>
+              <th>速度样本</th>
+              <th>平均速度</th>
+              <th>中位速度</th>
+              <th>标准差</th>
+              <th>最高速度</th>
+              <th>平均方向</th>
+              <th>累计中心位移</th>
+            </tr>
+          </thead>
+          <tbody id="summary-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    (() => {
+      const seriesColors = [
+        "var(--series-1)", "var(--series-2)", "var(--series-3)",
+        "var(--series-4)", "var(--series-5)", "var(--series-6)"
+      ];
+      const canvasColors = [
+        "#0d9d8b", "#dc772f", "#4681d8", "#d94e68", "#8d6dca", "#a1b32a"
+      ];
+      const video = document.getElementById("speed-video");
+      const canvas = document.getElementById("speed-overlay");
+      const context = canvas.getContext("2d");
+      const chart = document.getElementById("speed-chart");
+      const chartWrap = chart.parentElement;
+      const tooltip = document.getElementById("chart-tooltip");
+      const playToggle = document.getElementById("play-toggle");
+      const speedSelect = document.getElementById("speed-select");
+      const frameStatus = document.getElementById("frame-status");
+      const timeStatus = document.getElementById("time-status");
+      const overlayStatus = document.getElementById("overlay-status");
+      const pageMeta = document.getElementById("page-meta");
+      const loadError = document.getElementById("load-error");
+      const visibleTracks = new Set();
+      let fps = 30;
+      let maxFrame = 1;
+      let windowFrames = 10;
+      let rows = [];
+      let summaryRows = [];
+      let tracks = [];
+      let rowsByTrack = new Map();
+      let maskByTrack = new Map();
+      let lastUiFrame = -1;
+      let animationHandle = 0;
+
+
+      async function fetchText(url) {
+        const response = await fetch(url, { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error(`${url} 返回 ${response.status}`);
+        }
+        return response.text();
+      }
+
+      async function fetchJson(url) {
+        const response = await fetch(url, { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error(`${url} 返回 ${response.status}`);
+        }
+        return response.json();
+      }
+
+      function parseCsv(text) {
+        const lines = text.replace(/^\uFEFF/, "").trim().split(/\r?\n/);
+        const headers = lines.shift().split(",");
+        return lines.filter(Boolean).map(line => {
+          const values = line.split(",");
+          const row = {};
+          headers.forEach((header, index) => {
+            const raw = values[index] ?? "";
+            const numeric = Number(raw);
+            row[header] = Number.isFinite(numeric) ? numeric : raw;
+          });
+          return row;
+        });
+      }
+
+      const fmt = (value, digits = 1) =>
+        Number.isFinite(Number(value)) ? Number(value).toFixed(digits) : "—";
+      const trackColor = track =>
+        seriesColors[tracks.indexOf(track) % seriesColors.length];
+      const canvasColor = track =>
+        canvasColors[tracks.indexOf(track) % canvasColors.length];
+      const currentFrame = () => Math.max(
+        1,
+        Math.min(
+          maxFrame,
+          Math.floor((video.currentTime || 0) * fps) + 1
+        )
+      );
+      const clamp = (value, minimum, maximum) =>
+        Math.max(minimum, Math.min(maximum, value));
+      const normalizeAngle = value => ((Number(value) % 360) + 360) % 360;
+      const directionGlyph = value => {
+        const glyphs = ["→", "↘", "↓", "↙", "←", "↖", "↑", "↗"];
+        return glyphs[Math.round(normalizeAngle(value) / 45) % 8];
+      };
+      const circularMean = values => {
+        if (!values.length) return null;
+        const radians = values.map(value => value * Math.PI / 180);
+        const sine = radians.reduce((sum, value) => sum + Math.sin(value), 0);
+        const cosine = radians.reduce((sum, value) => sum + Math.cos(value), 0);
+        return normalizeAngle(Math.atan2(sine, cosine) * 180 / Math.PI);
+      };
+
+      function lowerBound(samples, frame, key = "frame_id") {
+        let low = 0;
+        let high = samples.length;
+        while (low < high) {
+          const middle = Math.floor((low + high) / 2);
+          if (samples[middle][key] < frame) low = middle + 1;
+          else high = middle;
+        }
+        return low;
+      }
+
+      function interpolateRow(track, frame) {
+        const samples = rowsByTrack.get(track);
+        if (!samples?.length) return null;
+        const index = lowerBound(samples, frame);
+        if (index <= 0) {
+          return samples[0]?.frame_id === frame ? samples[0] : null;
+        }
+        if (index >= samples.length) return samples[samples.length - 1];
+        const first = samples[index - 1];
+        const second = samples[index];
+        if (first.frame_id === frame || second.frame_id - first.frame_id < 1) {
+          return first.frame_id === frame ? first : second;
+        }
+        const ratio = (frame - first.frame_id) /
+          Math.max(1, second.frame_id - first.frame_id);
+        const mix = key => first[key] + (second[key] - first[key]) * ratio;
+        const mixAngle = key => {
+          const delta = (
+            (second[key] - first[key] + 540) % 360
+          ) - 180;
+          return normalizeAngle(first[key] + delta * ratio);
+        };
+        return {
+          ...first,
+          frame_id: frame,
+          center_x: mix("center_x"),
+          center_y: mix("center_y"),
+          velocity_x_px_s: mix("velocity_x_px_s"),
+          velocity_y_px_s: mix("velocity_y_px_s"),
+          speed_px_s: mix("speed_px_s"),
+          direction_deg: mixAngle("direction_deg"),
+          bbox_x: mix("bbox_x"),
+          bbox_y: mix("bbox_y"),
+          bbox_w: mix("bbox_w"),
+          bbox_h: mix("bbox_h")
+        };
+      }
+
+      function nearestMask(track, frame) {
+        const samples = maskByTrack.get(track);
+        if (!samples?.length) return null;
+        const index = lowerBound(samples, frame, "frame");
+        if (index <= 0) return samples[0];
+        if (index >= samples.length) return samples[samples.length - 1];
+        const before = samples[index - 1];
+        const after = samples[index];
+        const chosen = Math.abs(before.frame - frame) <=
+          Math.abs(after.frame - frame) ? before : after;
+        return Math.abs(chosen.frame - frame) <= 2 ? chosen : null;
+      }
+
+      function resizeCanvas() {
+        const width = video.videoWidth || 1280;
+        const height = video.videoHeight || 720;
+        if (canvas.width !== width || canvas.height !== height) {
+          canvas.width = width;
+          canvas.height = height;
+        }
+      }
+
+      function drawOverlay() {
+        resizeCanvas();
+        const width = canvas.width;
+        const height = canvas.height;
+        context.clearRect(0, 0, width, height);
+        const frame = currentFrame();
+        const visibleRows = [];
+
+        for (const track of tracks) {
+          if (!visibleTracks.has(track)) continue;
+          const row = interpolateRow(track, frame);
+          if (!row) continue;
+          visibleRows.push(row);
+          const color = canvasColor(track);
+          const centerX = row.center_x;
+          const centerY = row.center_y;
+          const maskSample = nearestMask(track, frame);
+
+          if (maskSample?.polygons?.length) {
+            context.save();
+            context.beginPath();
+            for (const polygon of maskSample.polygons) {
+              if (!polygon?.length) continue;
+              context.moveTo(polygon[0][0], polygon[0][1]);
+              for (let index = 1; index < polygon.length; index += 1) {
+                context.lineTo(polygon[index][0], polygon[index][1]);
+              }
+              context.closePath();
+            }
+            context.fillStyle = `${color}21`;
+            context.strokeStyle = `${color}b8`;
+            context.lineWidth = Math.max(2, width / 640);
+            context.fill();
+            context.stroke();
+            context.restore();
+          }
+
+          const velocityX = Number(row.velocity_x_px_s);
+          const velocityY = Number(row.velocity_y_px_s);
+          const speed = Math.hypot(velocityX, velocityY);
+          const direction = speed > 0.5
+            ? normalizeAngle(
+                Number.isFinite(Number(row.direction_deg))
+                  ? Number(row.direction_deg)
+                  : Math.atan2(velocityY, velocityX) * 180 / Math.PI
+              )
+            : null;
+          if (speed > 0.5) {
+            const angle = Math.atan2(velocityY, velocityX);
+            const arrowLength = clamp(speed * 0.3, 18, 110);
+            const endX = centerX + Math.cos(angle) * arrowLength;
+            const endY = centerY + Math.sin(angle) * arrowLength;
+            context.save();
+            context.strokeStyle = color;
+            context.fillStyle = color;
+            context.lineWidth = Math.max(4, width / 400);
+            context.beginPath();
+            context.moveTo(centerX, centerY);
+            context.lineTo(endX, endY);
+            context.stroke();
+            const headLength = Math.max(9, arrowLength * 0.24);
+            for (const turn of [-0.52, 0.52]) {
+              context.beginPath();
+              context.moveTo(endX, endY);
+              context.lineTo(
+                endX - Math.cos(angle + turn) * headLength,
+                endY - Math.sin(angle + turn) * headLength
+              );
+              context.stroke();
+            }
+            context.restore();
+          }
+
+          context.save();
+          context.fillStyle = color;
+          context.strokeStyle = "rgba(255,255,255,.92)";
+          context.lineWidth = Math.max(2, width / 700);
+          context.beginPath();
+          context.arc(
+            centerX,
+            centerY,
+            Math.max(5, width / 270),
+            0,
+            Math.PI * 2
+          );
+          context.fill();
+          context.stroke();
+          context.restore();
+
+          const fontSize = Math.max(15, Math.round(width / 76));
+          const speedLabel = `ID ${track} · ${fmt(row.speed_px_s, 1)} px/s`;
+          const directionLabel = direction === null
+            ? "方向 —"
+            : `方向 ${fmt(direction, 1)}° ${directionGlyph(direction)}`;
+          context.save();
+          context.font = `500 ${fontSize}px Inter, "Segoe UI", "Microsoft YaHei", sans-serif`;
+          const labelWidth = Math.max(
+            context.measureText(speedLabel).width,
+            context.measureText(directionLabel).width
+          );
+          const paddingX = 7;
+          const paddingY = 5;
+          const labelWidthWithPadding = labelWidth + paddingX * 2;
+          const lineHeight = fontSize + 2;
+          const labelHeight = lineHeight * 2 + paddingY * 2;
+          const labelX = clamp(
+            row.bbox_x,
+            4,
+            width - labelWidthWithPadding - 4
+          );
+          const labelY = clamp(row.bbox_y - labelHeight - 4, 4, height - labelHeight - 4);
+          context.fillStyle = "rgba(8, 15, 14, .78)";
+          context.fillRect(labelX, labelY, labelWidthWithPadding, labelHeight);
+          context.fillStyle = "#ffffff";
+          context.fillText(
+            speedLabel,
+            labelX + paddingX,
+            labelY + paddingY + fontSize - 2
+          );
+          context.fillText(
+            directionLabel,
+            labelX + paddingX,
+            labelY + paddingY + lineHeight + fontSize - 2
+          );
+          context.restore();
+        }
+
+        if (frame !== lastUiFrame) {
+          lastUiFrame = frame;
+          frameStatus.textContent = `第 ${frame} 帧`;
+          timeStatus.textContent = `${fmt(video.currentTime || 0, 2)} s`;
+          const speeds = visibleRows.map(row => Number(row.speed_px_s));
+          document.getElementById("live-count").textContent = `${speeds.length} 条`;
+          document.getElementById("live-mean").textContent = speeds.length
+            ? `${fmt(speeds.reduce((sum, value) => sum + value, 0) / speeds.length)} px/s`
+            : "—";
+          document.getElementById("live-max").textContent = speeds.length
+            ? `${fmt(Math.max(...speeds))} px/s`
+            : "—";
+          const meanDirection = circularMean(
+            visibleRows.map(row => Number(row.direction_deg))
+          );
+          document.getElementById("live-direction").textContent =
+            meanDirection === null
+              ? "—"
+              : `${fmt(meanDirection, 1)}° ${directionGlyph(meanDirection)}`;
+          drawChart();
+        }
+      }
+
+      function updateAnimation() {
+        drawOverlay();
+        if (!video.paused && !video.ended) {
+          animationHandle = requestAnimationFrame(updateAnimation);
+        }
+      }
+
+      function buildLegend() {
+        const legend = document.getElementById("legend");
+        legend.replaceChildren();
+        for (const track of tracks) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "legend-button";
+          button.style.color = trackColor(track);
+          button.setAttribute("aria-pressed", "true");
+          button.innerHTML =
+            `<span class="swatch"></span>` +
+            `<span style="color:var(--foreground)">轨迹 ${track}</span>`;
+          button.addEventListener("click", () => {
+            if (visibleTracks.has(track)) {
+              visibleTracks.delete(track);
+              button.setAttribute("aria-pressed", "false");
+            } else {
+              visibleTracks.add(track);
+              button.setAttribute("aria-pressed", "true");
+            }
+            lastUiFrame = -1;
+            drawOverlay();
+            buildOverview();
+            drawChart();
+          });
+          legend.appendChild(button);
+        }
+      }
+
+      function niceMaximum(value) {
+        if (!Number.isFinite(value) || value <= 0) return 10;
+        const exponent = 10 ** Math.floor(Math.log10(value));
+        const normalized = value / exponent;
+        const rounded = normalized <= 1 ? 1 :
+          normalized <= 2 ? 2 :
+          normalized <= 2.5 ? 2.5 :
+          normalized <= 5 ? 5 : 10;
+        return rounded * exponent;
+      }
+
+      function drawChart() {
+        if (!rows.length) return;
+        const width = Math.max(320, chartWrap.clientWidth);
+        const height = clamp(width * 0.38, 290, 430);
+        const margin = { top: 16, right: 20, bottom: 46, left: 66 };
+        const innerWidth = width - margin.left - margin.right;
+        const innerHeight = height - margin.top - margin.bottom;
+        const x = value =>
+          margin.left + (value - 1) / Math.max(1, maxFrame - 1) * innerWidth;
+        const visibleSpeeds = rows
+          .filter(row => visibleTracks.has(row.track_id))
+          .map(row => Number(row.speed_px_s))
+          .filter(Number.isFinite);
+        const yMax = niceMaximum(Math.max(10, ...visibleSpeeds));
+        const y = value =>
+          margin.top + (1 - clamp(value, 0, yMax) / yMax) * innerHeight;
+        const ns = "http://www.w3.org/2000/svg";
+        chart.setAttribute("viewBox", `0 0 ${width} ${height}`);
+        chart.setAttribute("height", String(height));
+        chart.replaceChildren();
+        const group = document.createElementNS(ns, "g");
+        chart.appendChild(group);
+
+        for (let index = 0; index <= 5; index += 1) {
+          const value = yMax * index / 5;
+          const yPosition = y(value);
+          const line = document.createElementNS(ns, "line");
+          line.setAttribute("x1", String(margin.left));
+          line.setAttribute("x2", String(width - margin.right));
+          line.setAttribute("y1", String(yPosition));
+          line.setAttribute("y2", String(yPosition));
+          line.setAttribute("stroke", "var(--border)");
+          line.setAttribute("stroke-width", "1");
+          group.appendChild(line);
+          const label = document.createElementNS(ns, "text");
+          label.setAttribute("x", String(margin.left - 10));
+          label.setAttribute("y", String(yPosition + 4));
+          label.setAttribute("text-anchor", "end");
+          label.setAttribute("fill", "var(--muted-foreground)");
+          label.setAttribute("font-size", "11");
+          label.textContent = value >= 100
+            ? Math.round(value).toLocaleString()
+            : fmt(value, 0);
+          group.appendChild(label);
+        }
+
+        const xTickCount = width < 640 ? 4 : 6;
+        for (let index = 0; index <= xTickCount; index += 1) {
+          const frame = Math.round(1 + (maxFrame - 1) * index / xTickCount);
+          const xPosition = x(frame);
+          const label = document.createElementNS(ns, "text");
+          label.setAttribute("x", String(xPosition));
+          label.setAttribute("y", String(height - 18));
+          label.setAttribute("text-anchor", "middle");
+          label.setAttribute("fill", "var(--muted-foreground)");
+          label.setAttribute("font-size", "11");
+          label.textContent = `${frame}`;
+          group.appendChild(label);
+        }
+
+        for (const track of tracks) {
+          if (!visibleTracks.has(track)) continue;
+          const samples = rowsByTrack.get(track) || [];
+          let pathData = "";
+          let previousFrame = null;
+          for (const row of samples) {
+            const command = previousFrame !== null &&
+              row.frame_id - previousFrame <= 2 ? "L" : "M";
+            pathData += `${command}${x(row.frame_id)},${y(row.speed_px_s)} `;
+            previousFrame = row.frame_id;
+          }
+          const path = document.createElementNS(ns, "path");
+          path.setAttribute("d", pathData.trim());
+          path.setAttribute("fill", "none");
+          path.setAttribute("stroke", trackColor(track));
+          path.setAttribute("stroke-width", "1.8");
+          path.setAttribute("stroke-linejoin", "round");
+          path.setAttribute("stroke-linecap", "round");
+          group.appendChild(path);
+
+          const step = Math.max(1, Math.ceil(samples.length / 36));
+          for (let index = 0; index < samples.length; index += step) {
+            const row = samples[index];
+            const circle = document.createElementNS(ns, "circle");
+            circle.setAttribute("cx", String(x(row.frame_id)));
+            circle.setAttribute("cy", String(y(row.speed_px_s)));
+            circle.setAttribute("r", "3");
+            circle.setAttribute("fill", trackColor(track));
+            circle.setAttribute("role", "button");
+            circle.setAttribute(
+              "aria-label",
+              `轨迹 ${track}，第 ${row.frame_id} 帧，${fmt(row.speed_px_s)} 像素每秒，方向 ${fmt(row.direction_deg)} 度`
+            );
+            const showTooltip = event => {
+              const rect = chartWrap.getBoundingClientRect();
+              tooltip.textContent =
+                `轨迹 ${track} · 第 ${row.frame_id} 帧 · ` +
+                `${fmt(row.speed_px_s)} px/s · ${fmt(row.direction_deg)}°`;
+              tooltip.style.left = `${event.clientX - rect.left + 10}px`;
+              tooltip.style.top = `${event.clientY - rect.top - 18}px`;
+              tooltip.classList.add("visible");
+            };
+            circle.addEventListener("mouseenter", showTooltip);
+            circle.addEventListener("mouseleave", () => tooltip.classList.remove("visible"));
+            circle.addEventListener("click", () => {
+              video.currentTime = Math.max(0, (row.frame_id - 1) / fps);
+              drawOverlay();
+            });
+            group.appendChild(circle);
+          }
+        }
+
+        const current = currentFrame();
+        const selected = document.createElementNS(ns, "line");
+        selected.setAttribute("x1", String(x(current)));
+        selected.setAttribute("x2", String(x(current)));
+        selected.setAttribute("y1", String(margin.top));
+        selected.setAttribute("y2", String(height - margin.bottom));
+        selected.setAttribute("stroke", "var(--foreground)");
+        selected.setAttribute("stroke-opacity", ".48");
+        selected.setAttribute("stroke-width", "1");
+        group.appendChild(selected);
+
+        const axisTitle = document.createElementNS(ns, "text");
+        axisTitle.setAttribute("x", String(margin.left));
+        axisTitle.setAttribute("y", "12");
+        axisTitle.setAttribute("fill", "var(--muted-foreground)");
+        axisTitle.setAttribute("font-size", "11");
+        axisTitle.textContent = "速度 (px/s)";
+        group.appendChild(axisTitle);
+      }
+
+      function buildOverview() {
+        const container = document.getElementById("speed-overview");
+        container.replaceChildren();
+        const visibleSummary = summaryRows.filter(row =>
+          visibleTracks.has(Number(row.track_id))
+        );
+        const maximum = Math.max(
+          1,
+          ...visibleSummary.map(row => Number(row.mean_speed_px_s))
+        );
+        for (const row of visibleSummary) {
+          const track = Number(row.track_id);
+          const mean = Number(row.mean_speed_px_s);
+          const meanDirection = circularMean(
+            (rowsByTrack.get(track) || []).map(sample =>
+              Number(sample.direction_deg)
+            )
+          );
+          const item = document.createElement("div");
+          item.className = "overview-row";
+          item.style.color = trackColor(track);
+          item.innerHTML =
+            `<span class="overview-label" style="color:var(--foreground)">轨迹 ${track}</span>` +
+            `<span class="overview-track"><span class="overview-bar" ` +
+            `style="width:${mean / maximum * 100}%;background:currentColor"></span></span>` +
+            `<span class="overview-value">平均 ${fmt(mean)} px/s · 方向 ` +
+            `${meanDirection === null ? "—" : `${fmt(meanDirection)}° ${directionGlyph(meanDirection)}`}</span>`;
+          container.appendChild(item);
+        }
+      }
+
+      function buildSummary() {
+        const body = document.getElementById("summary-body");
+        body.replaceChildren();
+        for (const row of summaryRows) {
+          const track = Number(row.track_id);
+          const meanDirection = circularMean(
+            (rowsByTrack.get(track) || []).map(sample =>
+              Number(sample.direction_deg)
+            )
+          );
+          const tr = document.createElement("tr");
+          tr.innerHTML =
+            `<td>轨迹 ${track}</td>` +
+            `<td>${Number(row.speed_samples)}</td>` +
+            `<td>${fmt(row.mean_speed_px_s)} px/s</td>` +
+            `<td>${fmt(row.median_speed_px_s)} px/s</td>` +
+            `<td>${fmt(row.std_speed_px_s)} px/s</td>` +
+            `<td>${fmt(row.max_speed_px_s)} px/s</td>` +
+            `<td>${meanDirection === null ? "—" : `${fmt(meanDirection)}° ${directionGlyph(meanDirection)}`}</td>` +
+            `<td>${fmt(row.total_distance_px)} px</td>`;
+          body.appendChild(tr);
+        }
+      }
+
+      async function loadData() {
+        const [frameText, summaryText, summaryPayload, maskPayload] =
+          await Promise.all([
+            fetchText("/results/speed/frame_speed.csv"),
+            fetchText("/results/speed/track_speed_summary.csv"),
+            fetchJson("/results/speed/speed_summary.json"),
+            fetchJson("/mask-shapes")
+          ]);
+        rows = parseCsv(frameText).filter(row =>
+          Number.isFinite(row.track_id) &&
+          Number.isFinite(row.frame_id) &&
+          Number.isFinite(row.speed_px_s) &&
+          (row.window_ready === true || row.window_ready === "True")
+        );
+        summaryRows = parseCsv(summaryText);
+        tracks = [...new Set(rows.map(row => Number(row.track_id)))]
+          .sort((first, second) => first - second);
+        tracks.forEach(track => visibleTracks.add(track));
+        rowsByTrack = new Map(tracks.map(track => [
+          track,
+          rows
+            .filter(row => Number(row.track_id) === track)
+            .sort((first, second) => first.frame_id - second.frame_id)
+        ]));
+        const maskSamples = maskPayload.samples || [];
+        maskByTrack = new Map(
+          [...new Set(maskSamples.map(sample => Number(sample.track_id)))]
+            .map(track => [
+              track,
+              maskSamples
+                .filter(sample => Number(sample.track_id) === track)
+                .sort((first, second) => first.frame - second.frame)
+            ])
+        );
+        fps = Number(summaryPayload?.meta?.fps) || 30;
+        windowFrames = Number(summaryPayload?.meta?.window_frames) || 10;
+        maxFrame = Math.max(...rows.map(row => Number(row.frame_id)));
+        pageMeta.textContent =
+          `angle.mp4 · ${maxFrame} 帧 · ${tracks.length} 条鱼 · ` +
+          `${windowFrames} 帧窗口 · ${fmt(fps, 2)} FPS`;
+        overlayStatus.textContent = `${windowFrames} 帧窗口速度与方向已载入`;
+        buildLegend();
+        buildOverview();
+        buildSummary();
+        drawOverlay();
+      }
+
+      playToggle.addEventListener("click", async () => {
+        if (video.paused) {
+          await video.play();
+        } else {
+          video.pause();
+        }
+      });
+      video.addEventListener("play", () => {
+        playToggle.textContent = "暂停";
+        cancelAnimationFrame(animationHandle);
+        updateAnimation();
+      });
+      video.addEventListener("pause", () => {
+        playToggle.textContent = "播放";
+        cancelAnimationFrame(animationHandle);
+        drawOverlay();
+      });
+      video.addEventListener("timeupdate", () => {
+        lastUiFrame = -1;
+        drawOverlay();
+      });
+      video.addEventListener("loadedmetadata", drawOverlay);
+      speedSelect.addEventListener("change", () => {
+        video.playbackRate = Number(speedSelect.value);
+      });
+
+      const resizeObserver = new ResizeObserver(() => drawChart());
+      resizeObserver.observe(chartWrap);
+
+      loadData().catch(error => {
+        console.error(error);
+        loadError.hidden = false;
+        loadError.textContent = `速度数据载入失败：${error.message}`;
+        overlayStatus.textContent = "数据载入失败";
+      });
+    })();
+  </script>
+</body>
+</html>

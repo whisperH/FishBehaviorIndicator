@@ -2,13 +2,14 @@
 
 [English](README.md)
 
-本项目包含三个可独立调用的行为指标模块及其可视化页面：
+本项目包含四个可独立调用的行为指标模块及其可视化页面：
 
 1. 鳃动频率
 2. 鱼体与水平面夹角
 3. 鱼的水层分布
+4. 鱼体中心运动速度
 
-三个指标都使用统一的标准输入和标准输出格式。
+四个指标都使用统一的标准输入和标准输出格式。
 
 ## 目录结构
 
@@ -34,6 +35,13 @@
 - `visualization/water_layer_viewer.html`：水层可视化页面
 - `results/water_layer/`：逐帧水层结果和窗口分布结果
 
+### 中心速度
+
+- `speed_analysis.py`：掩膜几何中心、速度和标准行为 API
+- `visualization/speed_viewer.py`：速度视频 HTTP 服务
+- `visualization/speed_viewer.html`：速度可视化页面
+- `results/speed/`：逐帧速度、轨迹汇总和可视化数据
+
 ### 共享文件
 
 - `common/segmentation_utils.py`：SAM RLE 解码和掩膜几何中心计算
@@ -50,10 +58,11 @@
 | `models/` | SAM3 模型权重 |
 | `assets/` | SAM3 BPE 分词词表 |
 | `common/` | 检测、跟踪、分割等共享工具代码 |
-| `visualization/` | 三个指标的 viewer Python 服务和 HTML 页面 |
+| `visualization/` | 四个指标的 viewer Python 服务和 HTML 页面 |
 | `results/gill/` | 鳃动可视化缓存和分析表格 |
 | `results/angle/` | 鱼体角度、SAM 掩膜和汇总结果 |
 | `results/water_layer/` | 水深比例、分层和窗口分布结果 |
+| `results/speed/` | 几何中心速度、轨迹统计和汇总结果 |
 | `.venv/` | 本地 Python 环境，不属于源码 |
 | `.idea/` | 可选的 PyCharm 配置 |
 
@@ -65,7 +74,7 @@ python -m pip install -r requirements.txt
 
 ## 标准输入格式
 
-三个计算函数都接收标准 `data` 记录数组：
+四个计算函数都接收标准 `data` 记录数组：
 
 ```json
 {
@@ -105,7 +114,7 @@ python -m pip install -r requirements.txt
 
 ## 标准输出格式
 
-三个计算函数都返回：
+四个计算函数都返回：
 
 ```json
 {
@@ -113,10 +122,10 @@ python -m pip install -r requirements.txt
     {
       "track_id": 1,
       "frame_id": 3,
-      "behavior_indicator": "velocity",
+      "behavior_indicator": "fish_speed",
       "behavior_value": 0,
-      "unit": "pixel",
-      "frame_range": [1, 2, 3]
+      "unit": "pixels/s",
+      "frame_range": [1, 2]
     }
   ]
 }
@@ -204,7 +213,12 @@ result = calculate_fish_body_angle(data=payload["data"])
 2. 计算全部掩膜像素的质心。
 3. 计算像素坐标协方差矩阵。
 4. 取最大特征值对应的特征向量作为鱼体主轴。
-5. 计算主轴相对图像水平方向的锐角。
+5. 沿主轴统计宽度轮廓，得到备用头尾方向。
+6. 如存在 SAM3 鱼头掩膜，选择与鱼体端点最匹配的鱼头并修正头尾方向。
+7. 计算鱼体主轴与水平线的无符号夹角，范围为 `0–90°`。
+
+头尾端点仍会单独保存并用于可视化箭头，但不改变角度大小。无论鱼头朝左上、
+左下、右上还是右下，鱼体与水平线的夹角都在 `0–90°`。
 
 ### SAM3 离线分析
 
@@ -214,11 +228,22 @@ python angle_analysis.py
 
 默认逐帧处理全部视频帧；如需抽样，可通过 `--stride` 指定间隔。
 
+默认读取 `results/angle/head_mask_shapes.json`；也可以显式指定其他鱼头
+掩膜文件：
+
+```powershell
+python angle_analysis.py --head-masks path/to/mask_shapes.json
+```
+
+鱼头匹配失败时自动保留宽度轮廓备用结果。分析完成后，鱼头掩膜会整合到
+`results/angle/`，角度、汇总、掩膜和可视化页面由同一次流程统一生成。
+
 输出：
 
 - `results/angle/frame_angles.csv`
 - `results/angle/track_angle_summary.csv`
 - `results/angle/mask_shapes.json`
+- `results/angle/head_mask_shapes.json`
 - `results/angle/angle_summary.json`
 
 ### 可视化
@@ -305,9 +330,68 @@ python visualization/water_layer_viewer.py
 
 页面支持实时修改水面和水底像素 `y` 坐标，并重新计算水深百分比和分层。
 
+## 4. 鱼体中心运动速度
+
+### Python API
+
+```python
+from speed_analysis import calculate_fish_speed
+
+result = calculate_fish_speed(
+    data=payload["data"],
+    fps=30.0,
+    window_frames=10,
+)
+```
+
+速度定义：
+
+```text
+velocity = linear_fit(mask_center, frame_index) * fps
+speed = hypot(velocity_x, velocity_y)
+```
+
+- 对同一轨迹最近 10 个有效帧的掩膜几何中心分别拟合 `x(frame)`、`y(frame)`。
+- 拟合斜率乘以 FPS 得到 `fish_velocity_x`、`fish_velocity_y`。
+- 速度大小和方向由拟合后的速度分量计算。
+- 窗口未满 10 帧时，速度返回 0。
+
+输出指标：
+
+- `segmentation_center_x`：SAM 掩膜几何中心 x，单位 `pixel`
+- `segmentation_center_y`：SAM 掩膜几何中心 y，单位 `pixel`
+- `fish_velocity_x`：水平速度分量，单位 `pixels/s`
+- `fish_velocity_y`：垂直速度分量，单位 `pixels/s`
+- `fish_speed`：中心速度大小，单位 `pixels/s`
+- `fish_velocity_direction`：速度方向，范围 `0–360°`
+
+### 命令行
+
+```powershell
+python speed_analysis.py
+```
+
+默认从 `results/angle/mask_shapes.json` 的轮廓重新计算逐帧掩膜几何中心，
+无需重新运行 SAM3。
+
+输出：
+
+- `results/speed/frame_speed.csv`
+- `results/speed/track_speed_summary.csv`
+- `results/speed/speed_distribution.json`
+- `results/speed/speed_summary.json`
+
+### 可视化
+
+```powershell
+python visualization/speed_viewer.py
+```
+
+访问：http://127.0.0.1:8772/
+
 ## 可视化与计算分离
 
-三个 viewer Python 文件只负责：
+四个 viewer Python 文件只负责：
 
 - 启动 HTTP 服务
 - 提供 HTML 页面
