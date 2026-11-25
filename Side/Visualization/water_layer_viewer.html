@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>鱼的水层分布</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --background: light-dark(#f4f7f6, #0f1415);
+      --foreground: light-dark(#172220, #e7efec);
+      --muted: light-dark(#e7eeeb, #1b2728);
+      --muted-foreground: light-dark(#60706c, #9eb0ab);
+      --border: light-dark(#d2ded9, #304041);
+      --top: light-dark(#148a82, #55d6cc);
+      --middle: light-dark(#c67823, #ffb15f);
+      --bottom: light-dark(#5e5fb4, #aaa8ff);
+      --series-1: light-dark(#0d8778, #4bd3bf);
+      --series-2: light-dark(#c76628, #ffab6b);
+      --series-3: light-dark(#316bc0, #79a7ff);
+      --series-4: light-dark(#ad3852, #ff8196);
+      --series-5: light-dark(#7456ae, #baa2ff);
+      --series-6: light-dark(#77831b, #c5d453);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--foreground);
+      font-family: Inter, "Segoe UI", "Microsoft YaHei", sans-serif;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    button, select { font: inherit; }
+    .page {
+      width: min(1400px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 22px 0 40px;
+    }
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    h1, h2, p { margin-top: 0; }
+    h1 { margin-bottom: 3px; font-size: 28px; font-weight: 500; letter-spacing: 0; }
+    h2 { margin-bottom: 10px; font-size: 18px; font-weight: 500; }
+    .subtle { color: var(--muted-foreground); }
+    .meta { color: var(--muted-foreground); text-align: right; white-space: nowrap; }
+    .video-section {
+      padding: 20px 0 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .video-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #050808;
+      border-radius: 8px;
+    }
+    video, canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+    video { object-fit: contain; background: #050808; }
+    canvas { pointer-events: none; }
+    .video-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding-top: 12px;
+    }
+    .btn {
+      padding: 7px 12px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: transparent;
+      color: var(--foreground);
+      cursor: pointer;
+    }
+    .btn:hover { background: var(--muted); }
+    .btn:focus-visible, .legend-button:focus-visible {
+      outline: 2px solid var(--series-1);
+      outline-offset: 2px;
+    }
+    .btn.primary { border-color: var(--foreground); }
+    .video-time { min-width: 190px; font-variant-numeric: tabular-nums; }
+    .coord-field {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted-foreground);
+      font-size: 12px;
+    }
+    .coord-field input {
+      width: 74px;
+      padding: 6px 7px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: transparent;
+      color: var(--foreground);
+      font-variant-numeric: tabular-nums;
+    }
+    .overlay-status { color: var(--muted-foreground); margin-left: auto; }
+    .live-summary {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+      padding: 14px 0 2px;
+    }
+    .live-summary div { min-width: 92px; }
+    .live-summary span {
+      display: block;
+      color: var(--muted-foreground);
+      font-size: 11px;
+    }
+    .live-summary strong {
+      display: block;
+      font-size: 19px;
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+    }
+    .chart-section, .occupancy-section, .table-section {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      margin-bottom: 8px;
+    }
+    .legend-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 2px;
+      border: 0;
+      background: transparent;
+      color: var(--foreground);
+      cursor: pointer;
+    }
+    .legend-button[aria-pressed="false"] { opacity: .34; }
+    .swatch {
+      width: 18px;
+      height: 3px;
+      border-radius: 2px;
+      background: currentColor;
+    }
+    .chart-wrap { position: relative; min-height: 330px; }
+    .chart-svg { display: block; width: 100%; overflow: visible; }
+    .chart-tooltip {
+      position: absolute;
+      pointer-events: none;
+      padding: 7px 9px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: var(--background);
+      color: var(--foreground);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, .16);
+      font-size: 12px;
+      opacity: 0;
+      z-index: 3;
+    }
+    .chart-tooltip.visible { opacity: 1; }
+    .occupancy-list { display: grid; gap: 10px; }
+    .occupancy-row {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr) 220px;
+      gap: 12px;
+      align-items: center;
+    }
+    .occupancy-bar {
+      display: flex;
+      height: 14px;
+      overflow: hidden;
+      border-radius: 7px;
+      background: var(--muted);
+    }
+    .occupancy-bar span { display: block; height: 100%; }
+    .occupancy-bar .top { background: var(--top); }
+    .occupancy-bar .middle { background: var(--middle); }
+    .occupancy-bar .bottom { background: var(--bottom); }
+    .occupancy-values {
+      color: var(--muted-foreground);
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
+    }
+    th, td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: right;
+    }
+    th:first-child, td:first-child { text-align: left; }
+    th { color: var(--muted-foreground); font-weight: 500; }
+    @media (max-width: 760px) {
+      .page { width: min(100% - 20px, 1400px); padding-top: 14px; }
+      .page-header { align-items: flex-start; flex-direction: column; }
+      .meta { text-align: left; white-space: normal; }
+      .overlay-status { margin-left: 0; width: 100%; }
+      .occupancy-row { grid-template-columns: 64px 1fr; }
+      .occupancy-values { grid-column: 2; }
+      .table-scroll { overflow-x: auto; }
+      table { min-width: 740px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="launch-note" style="padding:10px 18px;background:#eef5f4;color:#234b43;font-size:13px">
+    维护：chenxi。请运行本目录对应的 *_viewer.py，并打开其显示的网址。
+    页面只读取已生成的结果；参数预览不回写分析CSV，视频叠加仅显示当前帧的有效记录。
+    分析结果更新后请重启页面服务。
+  </div>
+  <script id="viewer-meta" type="application/json">{}</script>
+  <script>window.viewerMeta=JSON.parse(document.getElementById("viewer-meta").textContent);</script>
+  <div class="page">
+    <header class="page-header">
+      <div>
+        <h1>鱼的水层分布</h1>
+        <p class="subtle">按鱼体掩膜几何中心计算：0% 为水面，100% 为水底</p>
+      </div>
+      <div class="meta" id="page-meta"></div>
+    </header>
+
+    <section class="video-section" aria-label="鱼的水层视频">
+      <div class="video-frame">
+        <video id="layer-video" poster="/poster" controls muted playsinline preload="metadata">
+          <source src="/video" type="video/mp4">
+        </video>
+        <canvas id="layer-overlay"></canvas>
+      </div>
+      <div class="video-controls">
+        <button class="btn primary" id="play-toggle" type="button">播放</button>
+        <div class="video-time">
+          <span id="frame-status">第 1 帧</span>
+          <span class="subtle" id="time-status">0.00 s</span>
+        </div>
+        <select class="btn" id="speed-select" aria-label="播放速度">
+          <option value="0.5">0.5×</option>
+          <option value="1" selected>1×</option>
+          <option value="1.5">1.5×</option>
+          <option value="2">2×</option>
+        </select>
+        <label class="coord-field">水面 y
+          <input id="surface-y" type="number" min="0" max="719" step="1" value="232">
+        </label>
+        <label class="coord-field">水底 y
+          <input id="bottom-y" type="number" min="1" max="720" step="1" value="553">
+        </label>
+        <span class="overlay-status" id="overlay-status">等待视频加载</span>
+      </div>
+      <div class="live-summary" aria-live="polite">
+        <div><span>平均深度</span><strong id="live-mean">—</strong></div>
+        <div><span>表层</span><strong id="live-top">—</strong></div>
+        <div><span>中层</span><strong id="live-middle">—</strong></div>
+        <div><span>底层</span><strong id="live-bottom">—</strong></div>
+      </div>
+    </section>
+
+    <section class="chart-section" aria-labelledby="depth-chart-title">
+      <h2 id="depth-chart-title">水深比例时间序列</h2>
+      <div class="legend" id="legend" aria-label="轨迹显示开关"></div>
+      <div class="chart-wrap">
+        <svg class="chart-svg" id="depth-chart" role="img" aria-labelledby="depth-chart-title depth-chart-desc"></svg>
+        <div class="chart-tooltip" id="chart-tooltip" role="tooltip"></div>
+        <p class="subtle" id="depth-chart-desc">纵轴从水面 0 到水底 1，点击曲线点可跳转视频。</p>
+      </div>
+    </section>
+
+    <section class="occupancy-section" aria-labelledby="occupancy-title">
+      <h2 id="occupancy-title">各轨迹水层占比</h2>
+      <div class="occupancy-list" id="occupancy-list"></div>
+    </section>
+
+    <section class="table-section" aria-labelledby="table-title">
+      <h2 id="table-title">水层汇总</h2>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>轨迹</th>
+              <th>有效帧</th>
+              <th>最新中心 y</th>
+              <th>平均深度</th>
+              <th>表层占比</th>
+              <th>中层占比</th>
+              <th>底层占比</th>
+            </tr>
+          </thead>
+          <tbody id="summary-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <script id="depth-data" type="text/plain"></script>
+  <script id="mask-data" type="text/plain"></script>
+  <script>
+    (() => {
+      if(location.protocol === "file:") return;
+      const seriesColors = [
+        "var(--series-1)", "var(--series-2)", "var(--series-3)",
+        "var(--series-4)", "var(--series-5)", "var(--series-6)"
+      ];
+      const layerColors = ["#1aa39a", "#d58a2d", "#6b6bc4"];
+      const layerNames = ["表层", "中层", "底层"];
+      const video = document.getElementById("layer-video");
+      const canvas = document.getElementById("layer-overlay");
+      const context = canvas.getContext("2d");
+      const chart = document.getElementById("depth-chart");
+      const chartWrap = chart.parentElement;
+      const tooltip = document.getElementById("chart-tooltip");
+      const playToggle = document.getElementById("play-toggle");
+      const speedSelect = document.getElementById("speed-select");
+      const frameStatus = document.getElementById("frame-status");
+      const timeStatus = document.getElementById("time-status");
+      const overlayStatus = document.getElementById("overlay-status");
+      const surfaceInput = document.getElementById("surface-y");
+      const bottomInput = document.getElementById("bottom-y");
+      const visibleTracks = new Set();
+      const FPS = window.viewerMeta.fps;
+      surfaceInput.value=window.viewerMeta.surface_y;
+      bottomInput.value=window.viewerMeta.bottom_y;
+      surfaceInput.max=window.viewerMeta.height-1;
+      bottomInput.max=window.viewerMeta.height;
+      let lastUiFrame = -1;
+      let surfaceY = Number(surfaceInput.value);
+      let bottomY = Number(bottomInput.value);
+
+
+      function decode(id) {
+        const binary = atob(document.getElementById(id).textContent.trim());
+        return new TextDecoder("utf-8").decode(
+          Uint8Array.from(binary, char => char.charCodeAt(0))
+        );
+      }
+
+      function parseCsv(text) {
+        const matrix = []; let row = [], value = "", quoted = false;
+        const input = text.replace(/^\uFEFF/, "");
+        for (let i=0; i<input.length; i++) {
+          const c=input[i];
+          if (c==='"') { if(quoted && input[i+1]==='"'){value+='"';i++;}else{quoted=!quoted;} }
+          else if(c===',' && !quoted){row.push(value);value="";}
+          else if((c==='\n'||c==='\r') && !quoted){
+            if(c==='\r'&&input[i+1]==='\n')i++;
+            row.push(value);if(row.some(v=>v!==""))matrix.push(row);row=[];value="";
+          } else value+=c;
+        }
+        if(value!==""||row.length){row.push(value);matrix.push(row);}
+        const headers=matrix.shift()||[];
+        return matrix.map(values=>Object.fromEntries(headers.map((key,i)=>{
+          const raw=values[i]??"";
+          return [key,raw===""?null:/^(true|false)$/i.test(raw)?raw.toLowerCase()==="true":
+            Number.isFinite(Number(raw))?Number(raw):raw];
+        })));
+      }
+
+      const rows = parseCsv(decode("depth-data")).filter(row =>
+        Number.isFinite(row.track_id) &&
+        Number.isFinite(row.frame_id) &&
+        Number.isFinite(row.depth_ratio)
+      );
+      const tracks = [...new Set(rows.map(row => row.track_id))].sort((a, b) => a - b);
+      tracks.forEach(track=>visibleTracks.add(track));
+      document.getElementById("page-meta").textContent=`${window.viewerMeta.video_name} · ${window.viewerMeta.frame_count} 帧 · ${tracks.length} 条鱼`;
+      const rowsByTrack = new Map(tracks.map(track => [
+        track,
+        rows.filter(row => row.track_id === track).sort((a, b) => a.frame_id - b.frame_id)
+      ]));
+      const rowsByFrame = new Map();
+      rows.forEach(row => {
+        if (!rowsByFrame.has(row.frame_id)) rowsByFrame.set(row.frame_id, []);
+        rowsByFrame.get(row.frame_id).push(row);
+      });
+      const maskData = JSON.parse(decode("mask-data"));
+      const maskSamples = maskData.samples || [];
+      const maskByTrack = new Map(
+        [...new Set(maskSamples.map(sample => sample.track_id))].map(track => [
+          track,
+          maskSamples.filter(sample => sample.track_id === track).sort((a, b) => a.frame - b.frame)
+        ])
+      );
+
+      function recomputeDepthRows() {
+        const nextSurface = Number(surfaceInput.value);
+        const nextBottom = Number(bottomInput.value);
+        if (
+          !Number.isFinite(nextSurface) ||
+          !Number.isFinite(nextBottom) ||
+          nextBottom <= nextSurface + 1
+        ) {
+          return;
+        }
+        surfaceY = nextSurface;
+        bottomY = nextBottom;
+        rows.forEach(row => {
+          const centerY = row.center_y;
+          row.depth_ratio = Math.max(
+            0,
+            Math.min(1, (centerY - surfaceY) / (bottomY - surfaceY))
+          );
+          row.layer_index =
+            row.depth_ratio < 1 / 3 ? 0 :
+            row.depth_ratio < 2 / 3 ? 1 : 2;
+        });
+        lastUiFrame = -1;
+        buildOccupancy();
+        drawChart();
+      }
+
+      const fmt = (value, digits = 1) => Number(value).toFixed(digits);
+      const trackColor = track => seriesColors[tracks.indexOf(track) % seriesColors.length];
+      const currentFrame = () => Math.max(1, Math.min(window.viewerMeta.frame_count, Math.floor((video.currentTime || 0) * FPS) + 1));
+      const layerName = index => layerNames[Math.max(0, Math.min(2, index))];
+
+      function resample(points, count = 48) {
+        if (!points?.length) return [];
+        const closed = [...points, points[0]];
+        const lengths = [0];
+        for (let index = 1; index < closed.length; index += 1) {
+          lengths.push(lengths[index - 1] + Math.hypot(
+            closed[index][0] - closed[index - 1][0],
+            closed[index][1] - closed[index - 1][1]
+          ));
+        }
+        const total = lengths[lengths.length - 1];
+        if (!total) return [];
+        const result = [];
+        let segment = 1;
+        for (let index = 0; index < count; index += 1) {
+          const target = total * index / count;
+          while (segment < lengths.length - 1 && lengths[segment] < target) segment += 1;
+          const first = closed[segment - 1];
+          const second = closed[segment];
+          const local = (target - lengths[segment - 1]) /
+            Math.max(1e-9, lengths[segment] - lengths[segment - 1]);
+          result.push([
+            first[0] + (second[0] - first[0]) * local,
+            first[1] + (second[1] - first[1]) * local
+          ]);
+        }
+        return result;
+      }
+
+      function transform(points, sourceBox, targetBox) {
+        const scaleX = targetBox.w / Math.max(1, sourceBox[2]);
+        const scaleY = targetBox.h / Math.max(1, sourceBox[3]);
+        return points.map(([x, y]) => [
+          targetBox.x + (x - sourceBox[0]) * scaleX,
+          targetBox.y + (y - sourceBox[1]) * scaleY
+        ]);
+      }
+
+      function currentMask(track, frame, targetBox) {
+        return maskByTrack.get(track)?.find(row=>row.frame===frame)?.polygons?.[0]||[];
+      }
+
+      function interpolateLayerRecord(track, frame) {
+        return rowsByTrack.get(track)?.find(row=>row.frame_id===frame)||null;
+      }
+
+      function resizeCanvas() {
+        const width = video.videoWidth || 1280;
+        const height = video.videoHeight || 720;
+        if (canvas.width !== width || canvas.height !== height) {
+          canvas.width = width;
+          canvas.height = height;
+        }
+      }
+
+      function drawOverlay() {
+        resizeCanvas();
+        const width = canvas.width;
+        const height = canvas.height;
+        context.clearRect(0, 0, width, height);
+
+        const waterSpan = Math.max(1, bottomY - surfaceY);
+        const bands = [
+          { start: surfaceY, end: surfaceY + waterSpan / 3, color: layerColors[0], label: "表层" },
+          { start: surfaceY + waterSpan / 3, end: surfaceY + waterSpan * 2 / 3, color: layerColors[1], label: "中层" },
+          { start: surfaceY + waterSpan * 2 / 3, end: bottomY, color: layerColors[2], label: "底层" }
+        ];
+        const waterTop = Math.max(0, Math.min(height, surfaceY));
+        const waterBottom = Math.max(0, Math.min(height, bottomY));
+        context.globalAlpha = 0.30;
+        context.fillStyle = "#000000";
+        if (waterTop > 0) context.fillRect(0, 0, width, waterTop);
+        if (waterBottom < height) {
+          context.fillRect(0, waterBottom, width, height - waterBottom);
+        }
+
+        context.font = `600 ${Math.max(16, width / 80)}px "Segoe UI", "Microsoft YaHei", sans-serif`;
+        context.textAlign = "right";
+        context.textBaseline = "middle";
+        bands.forEach(band => {
+          context.globalAlpha = 0.22;
+          context.fillStyle = band.color;
+          context.fillRect(0, band.start, width, band.end - band.start);
+
+          context.globalAlpha = 0.78;
+          context.strokeStyle = band.color;
+          context.lineWidth = 2;
+          context.beginPath();
+          context.moveTo(0, band.start);
+          context.lineTo(width, band.start);
+          context.stroke();
+
+          context.globalAlpha = 0.95;
+          context.fillStyle = band.color;
+          context.fillText(band.label, width - 18, (band.start + band.end) / 2);
+        });
+        context.globalAlpha = 0.88;
+        context.strokeStyle = layerColors[2];
+        context.lineWidth = 3;
+        context.beginPath();
+        context.moveTo(0, bottomY);
+        context.lineTo(width, bottomY);
+        context.stroke();
+        context.textAlign = "left";
+
+        const frame = currentFrame();
+        const records = tracks
+          .filter(track => visibleTracks.has(track))
+          .map(track => interpolateLayerRecord(track, frame))
+          .filter(Boolean);
+        const counts = [0, 0, 0];
+        const depths = [];
+        const fontSize = Math.max(16, Math.round(width / 72));
+        context.font = `600 ${fontSize}px "Segoe UI", "Microsoft YaHei", sans-serif`;
+        context.textBaseline = "middle";
+
+        records.forEach(row => {
+          const layer = Math.max(0, Math.min(2, Math.round(row.layer_index)));
+          const color = layerColors[layer];
+          const box = { x: row.bbox_x, y: row.bbox_y, w: row.bbox_w, h: row.bbox_h };
+          const centerX = row.center_x;
+          const centerY = row.center_y;
+          counts[layer] += 1;
+          depths.push(row.depth_ratio);
+
+          const polygon = currentMask(row.track_id, frame, box);
+          if (polygon.length >= 3) {
+            context.beginPath();
+            context.moveTo(polygon[0][0], polygon[0][1]);
+            polygon.slice(1).forEach(([x, y]) => context.lineTo(x, y));
+            context.closePath();
+            context.globalAlpha = 0.30;
+            context.fillStyle = color;
+            context.fill();
+            context.globalAlpha = 0.95;
+            context.lineWidth = Math.max(2, width / 800);
+            context.strokeStyle = color;
+            context.stroke();
+          }
+
+          context.globalAlpha = 0.24;
+          context.strokeStyle = color;
+          context.lineWidth = 1;
+          context.setLineDash([8, 8]);
+          context.beginPath();
+          context.moveTo(0, centerY);
+          context.lineTo(width, centerY);
+          context.stroke();
+          context.setLineDash([]);
+          context.globalAlpha = 1;
+          context.beginPath();
+          context.arc(centerX, centerY, Math.max(4, width / 360), 0, Math.PI * 2);
+          context.fillStyle = color;
+          context.fill();
+
+          const label = `ID ${row.track_id} · y=${Math.round(centerY)} · ${Math.round(row.depth_ratio * 100)}% · ${layerName(layer)}`;
+          const padding = 6;
+          context.font = `600 ${fontSize}px "Segoe UI", "Microsoft YaHei", sans-serif`;
+          const metrics = context.measureText(label);
+          const boxWidth = metrics.width + padding * 2;
+          const boxHeight = fontSize + padding * 2;
+          const labelX = Math.min(width - boxWidth - 5, Math.max(5, box.x));
+          const labelY = Math.max(5, box.y - boxHeight - 5);
+          context.globalAlpha = 0.86;
+          context.fillStyle = "#07100e";
+          context.fillRect(labelX, labelY, boxWidth, boxHeight);
+          context.globalAlpha = 1;
+          context.fillStyle = "#ffffff";
+          context.fillText(label, labelX + padding, labelY + boxHeight / 2);
+        });
+        context.globalAlpha = 1;
+
+        if (frame !== lastUiFrame && records.length) {
+          lastUiFrame = frame;
+          frameStatus.textContent = `第 ${frame} 帧`;
+          timeStatus.textContent = `${fmt(video.currentTime || 0, 2)} s`;
+          document.getElementById("live-mean").textContent =
+            `${Math.round(depths.reduce((a, b) => a + b, 0) / depths.length * 100)}%`;
+          document.getElementById("live-top").textContent = `${counts[0]} 条`;
+          document.getElementById("live-middle").textContent = `${counts[1]} 条`;
+          document.getElementById("live-bottom").textContent = `${counts[2]} 条`;
+          overlayStatus.textContent = `水层叠加中 · ${records.length} 条鱼`;
+          drawChart();
+        }
+        requestAnimationFrame(drawOverlay);
+      }
+
+      function buildLegend() {
+        const legend = document.getElementById("legend");
+        tracks.forEach(track => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "legend-button";
+          button.setAttribute("aria-pressed", "true");
+          button.style.color = trackColor(track);
+          button.innerHTML = `<span class="swatch"></span><span style="color:var(--foreground)">轨迹 ${track}</span>`;
+          button.addEventListener("click", () => {
+            if (visibleTracks.has(track)) visibleTracks.delete(track);
+            else visibleTracks.add(track);
+            button.setAttribute("aria-pressed", String(visibleTracks.has(track)));
+            drawChart();
+          });
+          legend.appendChild(button);
+        });
+      }
+
+      function drawChart() {
+        const width = chartWrap.clientWidth;
+        const height = Math.max(300, Math.min(430, width * 0.46));
+        const margin = { top: 16, right: 18, bottom: 44, left: 58 };
+        chart.setAttribute("viewBox", `0 0 ${width} ${height}`);
+        chart.innerHTML = "";
+        const innerWidth = width - margin.left - margin.right;
+        const innerHeight = height - margin.top - margin.bottom;
+        const xMin = 1;
+        const xMax = window.viewerMeta.frame_count;
+        const x = value => margin.left + (value - xMin) / (xMax - xMin) * innerWidth;
+        const y = value => margin.top + value * innerHeight;
+        const ns = "http://www.w3.org/2000/svg";
+        const group = document.createElementNS(ns, "g");
+        chart.appendChild(group);
+
+        [0, .3333, .6667, 1].forEach(value => {
+          const line = document.createElementNS(ns, "line");
+          line.setAttribute("x1", margin.left);
+          line.setAttribute("x2", width - margin.right);
+          line.setAttribute("y1", y(value));
+          line.setAttribute("y2", y(value));
+          line.setAttribute("stroke", "var(--border)");
+          group.appendChild(line);
+          const label = document.createElementNS(ns, "text");
+          label.setAttribute("x", margin.left - 10);
+          label.setAttribute("y", y(value) + 4);
+          label.setAttribute("text-anchor", "end");
+          label.setAttribute("fill", "var(--muted-foreground)");
+          label.setAttribute("font-size", "12");
+          label.textContent = `${Math.round(value * 100)}%`;
+          group.appendChild(label);
+        });
+
+        Array.from({length:5},(_,i)=>Math.round(1+(window.viewerMeta.frame_count-1)*i/4)).forEach(frame => {
+          const label = document.createElementNS(ns, "text");
+          label.setAttribute("x", x(frame));
+          label.setAttribute("y", height - 15);
+          label.setAttribute("text-anchor", frame === 1 ? "start" : frame === window.viewerMeta.frame_count ? "end" : "middle");
+          label.setAttribute("fill", "var(--muted-foreground)");
+          label.setAttribute("font-size", "12");
+          label.textContent = `${frame}`;
+          group.appendChild(label);
+        });
+
+        const selected = document.createElementNS(ns, "line");
+        selected.setAttribute("x1", x(currentFrame()));
+        selected.setAttribute("x2", x(currentFrame()));
+        selected.setAttribute("y1", margin.top);
+        selected.setAttribute("y2", margin.top + innerHeight);
+        selected.setAttribute("stroke", "var(--foreground)");
+        selected.setAttribute("stroke-opacity", ".38");
+        group.appendChild(selected);
+
+        tracks.filter(track => visibleTracks.has(track)).forEach(track => {
+          const points = rowsByTrack.get(track);
+          const path = document.createElementNS(ns, "path");
+          path.setAttribute("d", points.map((row, index) =>
+            `${index === 0 ? "M" : "L"} ${x(row.frame_id)} ${y(row.depth_ratio)}`
+          ).join(" "));
+          path.setAttribute("fill", "none");
+          path.setAttribute("stroke", trackColor(track));
+          path.setAttribute("stroke-width", "2");
+          path.setAttribute("stroke-linejoin", "round");
+          group.appendChild(path);
+
+          points.forEach(row => {
+            const circle = document.createElementNS(ns, "circle");
+            circle.setAttribute("cx", x(row.frame_id));
+            circle.setAttribute("cy", y(row.depth_ratio));
+            circle.setAttribute("r", "3.4");
+            circle.setAttribute("fill", trackColor(track));
+            circle.style.cursor = "pointer";
+            circle.addEventListener("pointerenter", event => {
+              tooltip.innerHTML = `<strong>轨迹 ${track}</strong><br>第 ${row.frame_id} 帧 · ${Math.round(row.depth_ratio * 100)}%`;
+              tooltip.classList.add("visible");
+              const rect = chartWrap.getBoundingClientRect();
+              tooltip.style.left = `${event.clientX - rect.left + 8}px`;
+              tooltip.style.top = `${event.clientY - rect.top}px`;
+            });
+            circle.addEventListener("pointermove", event => {
+              const rect = chartWrap.getBoundingClientRect();
+              tooltip.style.left = `${event.clientX - rect.left + 8}px`;
+              tooltip.style.top = `${event.clientY - rect.top}px`;
+            });
+            circle.addEventListener("pointerleave", () => tooltip.classList.remove("visible"));
+            circle.addEventListener("click", () => {
+              video.currentTime = (row.frame_id - 1) / FPS;
+              video.pause();
+            });
+            group.appendChild(circle);
+          });
+        });
+      }
+
+      function buildOccupancy() {
+        const list = document.getElementById("occupancy-list");
+        const body = document.getElementById("summary-body");
+        list.innerHTML = "";
+        body.innerHTML = "";
+        tracks.forEach(track => {
+          const points = rowsByTrack.get(track);
+          const counts = [0, 0, 0];
+          points.forEach(row => counts[Math.round(row.layer_index)] += 1);
+          const total = Math.max(1, counts.reduce((a, b) => a + b, 0));
+          const ratios = counts.map(count => count / total);
+          const mean = points.reduce((sum, row) => sum + row.depth_ratio, 0) / Math.max(1, points.length);
+          const latest = points[points.length - 1];
+          const latestCenterY = latest.center_y;
+
+          const row = document.createElement("div");
+          row.className = "occupancy-row";
+          row.innerHTML =
+            `<strong>轨迹 ${track}</strong>` +
+            `<div class="occupancy-bar" role="img" aria-label="轨迹 ${track} 水层占比">` +
+            `<span class="top" style="width:${ratios[0] * 100}%"></span>` +
+            `<span class="middle" style="width:${ratios[1] * 100}%"></span>` +
+            `<span class="bottom" style="width:${ratios[2] * 100}%"></span></div>` +
+            `<span class="occupancy-values">表 ${Math.round(ratios[0] * 100)}% · ` +
+            `中 ${Math.round(ratios[1] * 100)}% · 底 ${Math.round(ratios[2] * 100)}%</span>`;
+          list.appendChild(row);
+
+          const tr = document.createElement("tr");
+          tr.innerHTML =
+            `<td>轨迹 ${track}</td><td>${points.length}</td><td>${Math.round(latestCenterY)} px</td>` +
+            `<td>${Math.round(mean * 100)}%</td>` +
+            `<td>${Math.round(ratios[0] * 100)}%</td>` +
+            `<td>${Math.round(ratios[1] * 100)}%</td>` +
+            `<td>${Math.round(ratios[2] * 100)}%</td>`;
+          body.appendChild(tr);
+        });
+      }
+
+      playToggle.addEventListener("click", async () => {
+        if (video.paused) await video.play();
+        else video.pause();
+      });
+      video.addEventListener("play", () => { playToggle.textContent = "暂停"; });
+      video.addEventListener("pause", () => { playToggle.textContent = "播放"; });
+      video.addEventListener("loadedmetadata", () => {
+        overlayStatus.textContent = "水层叠加已启用";
+      });
+      speedSelect.addEventListener("change", () => {
+        video.playbackRate = Number(speedSelect.value);
+      });
+      surfaceInput.addEventListener("input", recomputeDepthRows);
+      bottomInput.addEventListener("input", recomputeDepthRows);
+
+      const resizeObserver = new ResizeObserver(() => drawChart());
+      resizeObserver.observe(chartWrap);
+      buildLegend();
+      recomputeDepthRows();
+      requestAnimationFrame(drawOverlay);
+    })();
+  </script>
+</body>
+</html>

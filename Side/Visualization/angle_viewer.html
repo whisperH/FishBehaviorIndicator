@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>鱼体角度视频</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --background: light-dark(#f4f7f6, #0f1415);
+      --foreground: light-dark(#172220, #e7efec);
+      --muted: light-dark(#e7eeeb, #1b2728);
+      --muted-foreground: light-dark(#60706c, #9eb0ab);
+      --border: light-dark(#d2ded9, #304041);
+      --series-1: light-dark(#0d8778, #4bd3bf);
+      --series-2: light-dark(#c76628, #ffab6b);
+      --series-3: light-dark(#316bc0, #79a7ff);
+      --series-4: light-dark(#ad3852, #ff8196);
+      --series-5: light-dark(#7456ae, #baa2ff);
+      --series-6: light-dark(#77831b, #c5d453);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--foreground);
+      font-family: Inter, "Segoe UI", "Microsoft YaHei", sans-serif;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    button, select { font: inherit; }
+
+    .page {
+      width: min(1400px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 22px 0 40px;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h1, h2, p { margin-top: 0; }
+    h1 { margin-bottom: 3px; font-size: 28px; font-weight: 500; letter-spacing: 0; }
+    h2 { margin-bottom: 10px; font-size: 18px; font-weight: 500; }
+    .subtle { color: var(--muted-foreground); }
+
+    .meta {
+      color: var(--muted-foreground);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .video-section {
+      padding: 20px 0 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .video-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #050808;
+      border-radius: 8px;
+    }
+
+    video, canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    video {
+      object-fit: contain;
+      background: #050808;
+    }
+
+    canvas {
+      pointer-events: none;
+    }
+
+    .video-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding-top: 12px;
+    }
+
+    .btn {
+      padding: 7px 12px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: transparent;
+      color: var(--foreground);
+      cursor: pointer;
+    }
+
+    .btn:hover { background: var(--muted); }
+    .btn:focus-visible, .legend-button:focus-visible { outline: 2px solid var(--series-1); outline-offset: 2px; }
+    .btn.primary { border-color: var(--foreground); }
+
+    .video-time {
+      min-width: 185px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .overlay-status {
+      color: var(--muted-foreground);
+      margin-left: auto;
+    }
+
+    .live-summary {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      padding: 14px 0 4px;
+    }
+
+    .live-summary div {
+      min-width: 100px;
+    }
+
+    .live-summary span {
+      display: block;
+      color: var(--muted-foreground);
+      font-size: 11px;
+    }
+
+    .live-summary strong {
+      display: block;
+      font-size: 19px;
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .chart-section {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      margin-bottom: 8px;
+    }
+
+    .legend-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 2px;
+      border: 0;
+      background: transparent;
+      color: var(--foreground);
+      cursor: pointer;
+    }
+
+    .legend-button[aria-pressed="false"] { opacity: .34; }
+
+    .swatch {
+      width: 18px;
+      height: 3px;
+      border-radius: 2px;
+      background: currentColor;
+    }
+
+    .chart-wrap {
+      position: relative;
+      min-height: 340px;
+    }
+
+    .chart-svg {
+      display: block;
+      width: 100%;
+      overflow: visible;
+    }
+
+    .chart-tooltip {
+      position: absolute;
+      pointer-events: none;
+      padding: 7px 9px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: var(--background);
+      color: var(--foreground);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, .16);
+      font-size: 12px;
+      opacity: 0;
+      z-index: 3;
+    }
+
+    .chart-tooltip.visible { opacity: 1; }
+
+    .table-section {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
+    }
+
+    th, td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: right;
+    }
+
+    th:first-child, td:first-child { text-align: left; }
+    th { color: var(--muted-foreground); font-weight: 500; }
+    tbody tr:hover { background: var(--muted); }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 720px) {
+      .page { width: min(100% - 20px, 1400px); padding-top: 14px; }
+      .page-header { align-items: flex-start; flex-direction: column; }
+      .meta { text-align: left; white-space: normal; }
+      .overlay-status { margin-left: 0; width: 100%; }
+      .video-frame { border-radius: 6px; }
+      .table-scroll { overflow-x: auto; }
+      table { min-width: 680px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="launch-note" style="padding:10px 18px;background:#eef5f4;color:#234b43;font-size:13px">
+    维护：chenxi。请运行本目录对应的 *_viewer.py，并打开其显示的网址。
+    页面只读取已生成的结果；参数预览不回写分析CSV，视频叠加仅显示当前帧的有效记录。
+    分析结果更新后请重启页面服务。
+  </div>
+  <script id="viewer-meta" type="application/json">{}</script>
+  <script>window.viewerMeta=JSON.parse(document.getElementById("viewer-meta").textContent);</script>
+  <div class="page">
+    <header class="page-header">
+      <div>
+        <h1>鱼体与水平面夹角视频</h1>
+        <p class="subtle">数值为鱼体主轴与水平线的 0–90° 夹角；箭头从鱼尾指向鱼头</p>
+      </div>
+      <div class="meta">当前侧面结果 · 鱼体主轴角度</div>
+    </header>
+
+    <section class="video-section" aria-label="鱼体角度视频播放器">
+      <div class="video-frame">
+        <video id="angle-video" controls muted playsinline preload="metadata" poster="/results/angle/video_poster.jpg">
+          <source src="/video" type="video/mp4">
+        </video>
+        <canvas id="angle-overlay" aria-label="鱼体角度叠加层"></canvas>
+      </div>
+      <div class="video-controls">
+        <button class="btn primary" id="play-toggle" type="button">播放</button>
+        <div class="video-time">
+          <span id="frame-status">第 1 帧</span>
+          <span class="subtle" id="time-status">0.00 s</span>
+        </div>
+        <select class="btn" id="speed-select" aria-label="播放速度">
+          <option value="0.5">0.5×</option>
+          <option value="1" selected>1×</option>
+          <option value="1.5">1.5×</option>
+          <option value="2">2×</option>
+        </select>
+        <span class="overlay-status" id="overlay-status">等待视频加载</span>
+      </div>
+      <div class="live-summary" aria-live="polite">
+        <div><span>当前可见</span><strong id="live-count">—</strong></div>
+        <div><span>平均夹角</span><strong id="live-mean">—</strong></div>
+        <div><span>最小夹角</span><strong id="live-min">—</strong></div>
+        <div><span>最大夹角</span><strong id="live-max">—</strong></div>
+      </div>
+    </section>
+
+    <section class="chart-section" aria-labelledby="chart-title">
+      <h2 id="chart-title">鱼体与水平面夹角时间序列</h2>
+      <div class="legend" id="legend" aria-label="轨迹显示开关"></div>
+      <div class="chart-wrap">
+        <svg class="chart-svg" id="angle-chart" role="img" aria-labelledby="chart-title chart-desc"></svg>
+        <div class="chart-tooltip" id="chart-tooltip" role="tooltip"></div>
+        <p class="sr-only" id="chart-desc">六条鱼鱼体主轴与水平线夹角随时间变化，点击数据点可以跳转到对应视频位置。</p>
+      </div>
+    </section>
+
+    <section class="table-section" aria-labelledby="table-title">
+      <h2 id="table-title">轨迹角度汇总</h2>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>轨迹</th>
+              <th>有效采样</th>
+              <th>平均夹角</th>
+              <th>中位夹角</th>
+              <th>夹角标准差</th>
+              <th>最小夹角</th>
+              <th>最大夹角</th>
+            </tr>
+          </thead>
+          <tbody id="summary-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+
+  <script id="angle-data" type="text/plain"></script>
+  <script id="mot-data" type="text/plain"></script>
+  <script id="mask-data" type="text/plain"></script>
+  <script>
+    (() => {
+      if(location.protocol === "file:") return;
+      const colors = [
+        "var(--series-1)", "var(--series-2)", "var(--series-3)",
+        "var(--series-4)", "var(--series-5)", "var(--series-6)"
+      ];
+      const canvasColors = [
+        "#0d9d8b", "#dc772f", "#4681d8", "#d94e68", "#8d6dca", "#9aab28"
+      ];
+      const MOT_SCALE_X = 1;
+      const MOT_SCALE_Y = 1;
+      const video = document.getElementById("angle-video");
+      const canvas = document.getElementById("angle-overlay");
+      const context = canvas.getContext("2d");
+      const chart = document.getElementById("angle-chart");
+      const chartWrap = chart.parentElement;
+      const tooltip = document.getElementById("chart-tooltip");
+      const playToggle = document.getElementById("play-toggle");
+      const speedSelect = document.getElementById("speed-select");
+      const frameStatus = document.getElementById("frame-status");
+      const timeStatus = document.getElementById("time-status");
+      const overlayStatus = document.getElementById("overlay-status");
+      const visibleTracks = new Set();
+      let fps = window.viewerMeta.fps;
+      let lastUiTime = -1;
+      let videoFrameCallbackHandle = 0;
+      let fallbackAnimationHandle = 0;
+
+      function decodeBase64Utf8(id) {
+        const binary = atob(document.getElementById(id).textContent.trim());
+        const bytes = Uint8Array.from(binary, char => char.charCodeAt(0));
+        return new TextDecoder("utf-8").decode(bytes);
+      }
+
+      function parseCsv(text) {
+        const matrix = []; let row = [], value = "", quoted = false;
+        const input = text.replace(/^\uFEFF/, "");
+        for (let i=0; i<input.length; i++) {
+          const c=input[i];
+          if (c==='"') { if(quoted && input[i+1]==='"'){value+='"';i++;}else{quoted=!quoted;} }
+          else if(c===',' && !quoted){row.push(value);value="";}
+          else if((c==='\n'||c==='\r') && !quoted){
+            if(c==='\r'&&input[i+1]==='\n')i++;
+            row.push(value);if(row.some(v=>v!==""))matrix.push(row);row=[];value="";
+          } else value+=c;
+        }
+        if(value!==""||row.length){row.push(value);matrix.push(row);}
+        const headers=matrix.shift()||[];
+        return matrix.map(values=>Object.fromEntries(headers.map((key,i)=>{
+          const raw=values[i]??"";
+          return [key,raw===""?null:/^(true|false)$/i.test(raw)?raw.toLowerCase()==="true":
+            Number.isFinite(Number(raw))?Number(raw):raw];
+        })));
+      }
+
+      function parseMotCsv(text) {
+        const clean = text.replace(/^\uFEFF/, "").trim();
+        return clean.split(/\r?\n/).filter(Boolean).map(line => {
+          const values = line.split(",");
+          return {
+            frame: Number(values[0]),
+            track_id: Number(values[1]),
+            x: Number(values[2]) * MOT_SCALE_X,
+            y: Number(values[3]) * MOT_SCALE_Y,
+            w: Number(values[4]) * MOT_SCALE_X,
+            h: Number(values[5]) * MOT_SCALE_Y,
+            confidence: Number(values[8] ?? 1)
+          };
+        }).filter(row =>
+          Number.isFinite(row.frame) &&
+          Number.isFinite(row.track_id) &&
+          Number.isFinite(row.x) &&
+          Number.isFinite(row.y) &&
+          Number.isFinite(row.w) &&
+          Number.isFinite(row.h) &&
+          row.confidence > 0
+        );
+      }
+
+      const angleRows = parseCsv(decodeBase64Utf8("angle-data")).filter(row => row.valid === true);
+      const motRows = parseMotCsv(decodeBase64Utf8("mot-data"));
+      const maskData = JSON.parse(decodeBase64Utf8("mask-data"));
+      const maskSamples = maskData.samples || [];
+      const maskByTrack = new Map(
+        [...new Set(maskSamples.map(sample => sample.track_id))].map(track => [
+          track,
+          maskSamples.filter(sample => sample.track_id === track).sort((a, b) => a.frame - b.frame)
+        ])
+      );
+
+      const tracks = [...new Set(angleRows.map(row => row.track_id))].sort((a, b) => a - b);
+      tracks.forEach(track=>visibleTracks.add(track));
+      const angleByTrack = new Map(tracks.map(track =>
+        [track, angleRows.filter(row => row.track_id === track).sort((a, b) => a.frame - b.frame)]
+      ));
+      const motByFrame = new Map();
+      motRows.forEach(row => {
+        if (!motByFrame.has(row.frame)) motByFrame.set(row.frame, []);
+        motByFrame.get(row.frame).push(row);
+      });
+
+      const fmt = (value, digits = 1) => Number(value).toFixed(digits);
+      const trackColor = track => colors[tracks.indexOf(track) % colors.length];
+      const canvasColor = track => canvasColors[tracks.indexOf(track) % canvasColors.length];
+      const angleDistance = (first, second) =>
+        Math.abs(((first - second + 180) % 360 + 360) % 360 - 180);
+      const normalizeAngle = value => {
+        const normalized = ((value % 360) + 360) % 360;
+        return normalized < 1e-9 || normalized > 360 - 1e-9 ? 0 : normalized;
+      };
+
+      function circularMean(values) {
+        const radians = values.map(value => value * Math.PI / 180);
+        const sine = radians.reduce((sum, value) => sum + Math.sin(value), 0);
+        const cosine = radians.reduce((sum, value) => sum + Math.cos(value), 0);
+        return normalizeAngle(Math.atan2(sine, cosine) * 180 / Math.PI);
+      }
+
+      function circularMedian(values) {
+        let best = values[0];
+        let bestCost = Infinity;
+        values.forEach(candidate => {
+          const cost = values.reduce(
+            (sum, value) => sum + angleDistance(value, candidate),
+            0
+          );
+          if (cost < bestCost) {
+            best = candidate;
+            bestCost = cost;
+          }
+        });
+        return best;
+      }
+
+      function circularStd(values) {
+        const radians = values.map(value => value * Math.PI / 180);
+        const sine = radians.reduce((sum, value) => sum + Math.sin(value), 0);
+        const cosine = radians.reduce((sum, value) => sum + Math.cos(value), 0);
+        const resultant = Math.sqrt(sine * sine + cosine * cosine) / values.length;
+        return Math.sqrt(-2 * Math.log(Math.max(resultant, 1e-12))) * 180 / Math.PI;
+      }
+
+      function interpolateTrack(track, frame) {
+        return angleByTrack.get(track)?.find(row=>row.frame===frame)||null;
+      }
+
+      function resamplePolygon(points, count = 56) {
+        if (!points?.length) return [];
+        const closed = [...points, points[0]];
+        const lengths = [0];
+        for (let index = 1; index < closed.length; index += 1) {
+          const dx = closed[index][0] - closed[index - 1][0];
+          const dy = closed[index][1] - closed[index - 1][1];
+          lengths.push(lengths[lengths.length - 1] + Math.hypot(dx, dy));
+        }
+        const total = lengths[lengths.length - 1];
+        if (total <= 0) return [];
+        const result = [];
+        let segment = 1;
+        for (let index = 0; index < count; index += 1) {
+          const target = total * index / count;
+          while (segment < lengths.length - 1 && lengths[segment] < target) segment += 1;
+          const startLength = lengths[segment - 1];
+          const segmentLength = Math.max(1e-9, lengths[segment] - startLength);
+          const t = (target - startLength) / segmentLength;
+          const first = closed[segment - 1];
+          const second = closed[segment];
+          result.push([
+            first[0] + (second[0] - first[0]) * t,
+            first[1] + (second[1] - first[1]) * t
+          ]);
+        }
+        return result;
+      }
+
+      function transformPolygon(points, sourceBox, targetBox) {
+        const scaleX = targetBox.w / Math.max(1, sourceBox[2]);
+        const scaleY = targetBox.h / Math.max(1, sourceBox[3]);
+        return points.map(([x, y]) => [
+          targetBox.x + (x - sourceBox[0]) * scaleX,
+          targetBox.y + (y - sourceBox[1]) * scaleY
+        ]);
+      }
+
+      function interpolateMask(track, frame, targetBox) {
+        return maskByTrack.get(track)?.find(row=>row.frame===frame)?.polygons?.[0]||[];
+      }
+
+      function currentFrame(mediaTime = video.currentTime || 0) {
+        return Math.max(1, Math.min(window.viewerMeta.frame_count, Math.floor(mediaTime * fps) + 1));
+      }
+
+      function resizeCanvas() {
+        const width = video.videoWidth || 1920;
+        const height = video.videoHeight || 1080;
+        if (canvas.width !== width || canvas.height !== height) {
+          canvas.width = width;
+          canvas.height = height;
+        }
+      }
+
+      function drawOverlay(mediaTime = video.currentTime || 0) {
+        resizeCanvas();
+        const width = canvas.width;
+        const height = canvas.height;
+        context.clearRect(0, 0, width, height);
+        const frame = currentFrame(mediaTime);
+        const boxes = motByFrame.get(frame) || [];
+        const shownAngles = [];
+        const fontSize = Math.max(18, Math.round(width / 72));
+        context.font = `600 ${fontSize}px "Segoe UI", "Microsoft YaHei", sans-serif`;
+        context.textBaseline = "middle";
+
+        boxes.forEach(box => {
+          if (!visibleTracks.has(box.track_id)) return;
+          const angle = interpolateTrack(box.track_id, frame);
+          if (!angle) return;
+          shownAngles.push(angle);
+
+          const cx = box.x + box.w / 2;
+          const cy = box.y + box.h / 2;
+          const radians = angle.orientation_deg * Math.PI / 180;
+          const length = Math.max(box.w, box.h) * 0.82;
+          const dx = Math.cos(radians) * length / 2;
+          const dy = Math.sin(radians) * length / 2;
+          const color = canvasColor(box.track_id);
+          const hasEndpoints = [
+            angle.head_x, angle.head_y, angle.tail_x, angle.tail_y
+          ].every(Number.isFinite);
+          const tailPoint = hasEndpoints
+            ? { x: angle.tail_x, y: angle.tail_y }
+            : { x: cx - dx, y: cy - dy };
+          const headPoint = hasEndpoints
+            ? { x: angle.head_x, y: angle.head_y }
+            : { x: cx + dx, y: cy + dy };
+
+          const maskPolygon = interpolateMask(box.track_id, frame, box);
+          if (maskPolygon.length >= 3) {
+            context.beginPath();
+            context.moveTo(maskPolygon[0][0], maskPolygon[0][1]);
+            maskPolygon.slice(1).forEach(([x, y]) => context.lineTo(x, y));
+            context.closePath();
+            context.globalAlpha = 0.22;
+            context.fillStyle = color;
+            context.fill();
+            context.globalAlpha = 0.9;
+            context.lineWidth = Math.max(2, width / 900);
+            context.strokeStyle = color;
+            context.stroke();
+          }
+
+          context.strokeStyle = color;
+          context.lineWidth = Math.max(2, width / 720);
+          context.globalAlpha = 0.88;
+          context.strokeRect(box.x, box.y, box.w, box.h);
+
+          context.lineWidth = Math.max(3, width / 480);
+          context.beginPath();
+          context.moveTo(tailPoint.x, tailPoint.y);
+          context.lineTo(headPoint.x, headPoint.y);
+          context.stroke();
+
+          context.fillStyle = color;
+          context.beginPath();
+          context.arc(cx, cy, Math.max(4, width / 360), 0, Math.PI * 2);
+          context.fill();
+
+          if (hasEndpoints) {
+            const axisX = headPoint.x - tailPoint.x;
+            const axisY = headPoint.y - tailPoint.y;
+            const axisLength = Math.max(1e-6, Math.hypot(axisX, axisY));
+            const unitX = axisX / axisLength;
+            const unitY = axisY / axisLength;
+            const arrowLength = Math.max(12, width / 70);
+            context.strokeStyle = color;
+            context.lineWidth = Math.max(3, width / 520);
+            for (const turn of [-0.55, 0.55]) {
+              const arrowX = -unitX * Math.cos(turn) + unitY * Math.sin(turn);
+              const arrowY = -unitY * Math.cos(turn) - unitX * Math.sin(turn);
+              context.beginPath();
+              context.moveTo(headPoint.x, headPoint.y);
+              context.lineTo(
+                headPoint.x + arrowX * arrowLength,
+                headPoint.y + arrowY * arrowLength
+              );
+              context.stroke();
+            }
+          }
+
+          const label = `ID ${box.track_id}  ${fmt(angle.angle_horizontal_deg)}°`;
+          const metrics = context.measureText(label);
+          const paddingX = 7;
+          const paddingY = 5;
+          const labelWidth = metrics.width + paddingX * 2;
+          const labelHeight = fontSize + paddingY * 2;
+          const labelX = Math.min(width - labelWidth - 6, Math.max(6, box.x));
+          const labelY = Math.max(6, box.y - labelHeight - 5);
+
+          context.globalAlpha = 0.84;
+          context.fillStyle = "#07100e";
+          context.fillRect(labelX, labelY, labelWidth, labelHeight);
+          context.globalAlpha = 1;
+          context.fillStyle = "#ffffff";
+          context.fillText(label, labelX + paddingX, labelY + labelHeight / 2);
+        });
+
+        context.globalAlpha = 1;
+        if (frame !== lastUiTime && shownAngles.length) {
+          lastUiTime = frame;
+          const values = shownAngles.map(row => row.angle_horizontal_deg);
+          const mean = values.reduce((sum, value) => sum + value, 0) / values.length;
+          frameStatus.textContent = `第 ${frame} 帧`;
+          timeStatus.textContent = `${fmt(mediaTime, 2)} s`;
+          document.getElementById("live-count").textContent = `${values.length} 条`;
+          document.getElementById("live-mean").textContent = `${fmt(mean)}°`;
+          document.getElementById("live-min").textContent = `${fmt(Math.min(...values))}°`;
+          document.getElementById("live-max").textContent = `${fmt(Math.max(...values))}°`;
+          const samHeadCount = shownAngles.filter(
+            row => row.direction_source === "sam3_head_mask"
+          ).length;
+          overlayStatus.textContent =
+            `SAM3 鱼头方向 · ${samHeadCount}/${values.length} 条`;
+          drawChart();
+        }
+      }
+
+      function startOverlayFrameLoop() {
+        if (typeof video.requestVideoFrameCallback === "function") {
+          const renderVideoFrame = (now, metadata) => {
+            drawOverlay(metadata.mediaTime);
+            videoFrameCallbackHandle = video.requestVideoFrameCallback(
+              renderVideoFrame
+            );
+          };
+          videoFrameCallbackHandle = video.requestVideoFrameCallback(
+            renderVideoFrame
+          );
+          return;
+        }
+
+        const renderFallbackFrame = () => {
+          drawOverlay();
+          fallbackAnimationHandle = requestAnimationFrame(renderFallbackFrame);
+        };
+        fallbackAnimationHandle = requestAnimationFrame(renderFallbackFrame);
+      }
+
+      function buildLegend() {
+        const legend = document.getElementById("legend");
+        tracks.forEach(track => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "legend-button";
+          button.setAttribute("aria-pressed", "true");
+          button.style.color = trackColor(track);
+          button.innerHTML = `<span class="swatch"></span><span style="color:var(--foreground)">轨迹 ${track}</span>`;
+          button.addEventListener("click", () => {
+            if (visibleTracks.has(track)) visibleTracks.delete(track);
+            else visibleTracks.add(track);
+            button.setAttribute("aria-pressed", String(visibleTracks.has(track)));
+            drawChart();
+          });
+          legend.appendChild(button);
+        });
+      }
+
+      function drawChart() {
+        const width = chartWrap.clientWidth;
+        const height = Math.max(300, Math.min(430, width * 0.46));
+        const margin = { top: 16, right: 18, bottom: 44, left: 58 };
+        chart.setAttribute("viewBox", `0 0 ${width} ${height}`);
+        chart.innerHTML = "";
+        const innerWidth = width - margin.left - margin.right;
+        const innerHeight = height - margin.top - margin.bottom;
+        const times = angleRows.map(row => row.time_s);
+        const xMin = Math.min(...times);
+        const xMax = Math.max(...times);
+        const x = value => margin.left + (value - xMin) / Math.max(1e-9, xMax - xMin) * innerWidth;
+        const y = value => margin.top + (90 - value) / 90 * innerHeight;
+        const ns = "http://www.w3.org/2000/svg";
+        const group = document.createElementNS(ns, "g");
+        chart.appendChild(group);
+
+        for (let value = 0; value <= 90; value += 15) {
+          const line = document.createElementNS(ns, "line");
+          line.setAttribute("x1", margin.left);
+          line.setAttribute("x2", width - margin.right);
+          line.setAttribute("y1", y(value));
+          line.setAttribute("y2", y(value));
+          line.setAttribute("stroke", "var(--border)");
+          group.appendChild(line);
+          const label = document.createElementNS(ns, "text");
+          label.setAttribute("x", margin.left - 10);
+          label.setAttribute("y", y(value) + 4);
+          label.setAttribute("text-anchor", "end");
+          label.setAttribute("fill", "var(--muted-foreground)");
+          label.setAttribute("font-size", "12");
+          label.textContent = `${value}°`;
+          group.appendChild(label);
+        }
+
+        const tickCount = width < 560 ? 4 : 6;
+        for (let index = 0; index < tickCount; index += 1) {
+          const value = xMin + (xMax - xMin) * index / (tickCount - 1);
+          const label = document.createElementNS(ns, "text");
+          label.setAttribute("x", x(value));
+          label.setAttribute("y", height - 15);
+          label.setAttribute("text-anchor", index === 0 ? "start" : index === tickCount - 1 ? "end" : "middle");
+          label.setAttribute("fill", "var(--muted-foreground)");
+          label.setAttribute("font-size", "12");
+          label.textContent = `${fmt(value, 1)} s`;
+          group.appendChild(label);
+        }
+
+        const xTitle = document.createElementNS(ns, "text");
+        xTitle.setAttribute("x", margin.left + innerWidth / 2);
+        xTitle.setAttribute("y", height - 1);
+        xTitle.setAttribute("text-anchor", "middle");
+        xTitle.setAttribute("fill", "var(--foreground)");
+        xTitle.setAttribute("font-size", "12");
+        xTitle.textContent = "时间";
+        group.appendChild(xTitle);
+
+        const currentX = x(video.currentTime || 0);
+        const selected = document.createElementNS(ns, "line");
+        selected.setAttribute("x1", currentX);
+        selected.setAttribute("x2", currentX);
+        selected.setAttribute("y1", margin.top);
+        selected.setAttribute("y2", margin.top + innerHeight);
+        selected.setAttribute("stroke", "var(--foreground)");
+        selected.setAttribute("stroke-opacity", ".38");
+        group.appendChild(selected);
+
+        tracks.filter(track => visibleTracks.has(track)).forEach(track => {
+          const points = angleByTrack.get(track);
+          const path = document.createElementNS(ns, "path");
+          path.setAttribute("d", points.map((row, index) =>
+            `${index === 0 ? "M" : "L"} ${x(row.time_s)} ${y(row.angle_horizontal_deg)}`
+          ).join(" "));
+          path.setAttribute("fill", "none");
+          path.setAttribute("stroke", trackColor(track));
+          path.setAttribute("stroke-width", "2");
+          path.setAttribute("stroke-linejoin", "round");
+          group.appendChild(path);
+
+          points.forEach(row => {
+            const circle = document.createElementNS(ns, "circle");
+            circle.setAttribute("cx", x(row.time_s));
+            circle.setAttribute("cy", y(row.angle_horizontal_deg));
+            circle.setAttribute("r", "4");
+            circle.setAttribute("fill", trackColor(track));
+            circle.setAttribute("stroke", "var(--background)");
+            circle.setAttribute("stroke-width", "1.5");
+            circle.style.cursor = "pointer";
+            circle.addEventListener("pointerenter", event => {
+              tooltip.innerHTML = `<strong>轨迹 ${track}</strong><br>${fmt(row.angle_horizontal_deg)}° · ${fmt(row.time_s, 2)} s`;
+              tooltip.classList.add("visible");
+              const rect = chartWrap.getBoundingClientRect();
+              tooltip.style.left = `${event.clientX - rect.left + 8}px`;
+              tooltip.style.top = `${event.clientY - rect.top}px`;
+            });
+            circle.addEventListener("pointermove", event => {
+              const rect = chartWrap.getBoundingClientRect();
+              tooltip.style.left = `${event.clientX - rect.left + 8}px`;
+              tooltip.style.top = `${event.clientY - rect.top}px`;
+            });
+            circle.addEventListener("pointerleave", () => tooltip.classList.remove("visible"));
+            circle.addEventListener("click", () => {
+              video.currentTime = row.time_s;
+              video.pause();
+            });
+            group.appendChild(circle);
+          });
+        });
+      }
+
+      function buildSummaryTable() {
+        const body = document.getElementById("summary-body");
+        tracks.forEach(track => {
+          const values = angleByTrack.get(track).map(row => row.angle_horizontal_deg);
+          const mean = values.reduce((sum, value) => sum + value, 0) / values.length;
+          const sorted = [...values].sort((first, second) => first - second);
+          const middle = Math.floor(sorted.length / 2);
+          const median = sorted.length % 2
+            ? sorted[middle]
+            : (sorted[middle - 1] + sorted[middle]) / 2;
+          const variance = values.reduce(
+            (sum, value) => sum + (value - mean) ** 2,
+            0
+          ) / values.length;
+          const std = Math.sqrt(variance);
+          const tr = document.createElement("tr");
+          tr.innerHTML =
+            `<td>轨迹 ${track}</td><td>${values.length}</td><td>${fmt(mean)}°</td>` +
+            `<td>${fmt(median)}°</td><td>${fmt(std)}°</td>` +
+            `<td>${fmt(Math.min(...values))}°</td><td>${fmt(Math.max(...values))}°</td>`;
+          body.appendChild(tr);
+        });
+      }
+
+      playToggle.addEventListener("click", async () => {
+        if (video.paused) await video.play();
+        else video.pause();
+      });
+
+      video.addEventListener("play", () => { playToggle.textContent = "暂停"; });
+      video.addEventListener("pause", () => { playToggle.textContent = "播放"; });
+      video.addEventListener("loadedmetadata", () => {
+        overlayStatus.textContent = "SAM3 掩膜与角度叠加已启用";
+        drawChart();
+        drawOverlay(video.currentTime || 0);
+      });
+      video.addEventListener("seeked", () => {
+        lastUiTime = -1;
+        drawChart();
+        drawOverlay(video.currentTime || 0);
+      });
+      speedSelect.addEventListener("change", () => {
+        video.playbackRate = Number(speedSelect.value);
+      });
+
+      const resizeObserver = new ResizeObserver(() => drawChart());
+      resizeObserver.observe(chartWrap);
+
+      buildLegend();
+      buildSummaryTable();
+      drawChart();
+      startOverlayFrameLoop();
+    })();
+  </script>
+</body>
+</html>
