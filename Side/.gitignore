@@ -1,0 +1,22 @@
+﻿# Python 缓存
+__pycache__/
+*.pyc
+
+# IDE 和虚拟环境
+.idea/
+.venv/
+venv/
+
+# 模型权重
+*.pt
+*.pth
+*.ckpt
+*.onnx
+
+# 输入数据集
+Tracker/Input/
+
+# 运行输出
+Tracker/Output/
+Behavior/Output/
+Visualization/data/

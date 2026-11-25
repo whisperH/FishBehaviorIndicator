@@ -1,0 +1,17 @@
+# chenxi：已在合并项目当前sam3环境验证，不需重复升级核心GPU依赖。
+numpy
+pandas==3.1.1
+scipy
+opencv-python
+pycocotools
+torch
+torchvision
+Pillow
+timm
+einops
+ftfy
+regex
+iopath
+huggingface-hub
+psutil
+# SAM3源码由Model/vendor提供，不另装PyPI sam3包。
